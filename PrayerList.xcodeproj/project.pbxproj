@@ -19,7 +19,6 @@
 		142BE6211B262DDD0059B1B2 /* PrayerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */; };
 		142BE6241B262E370059B1B2 /* PrayerListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */; };
 		142BE6251B262E370059B1B2 /* RequestEditorViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6231B262E370059B1B2 /* RequestEditorViewController.swift */; };
-		142BE6271B262E630059B1B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142BE6261B262E630059B1B2 /* Main.storyboard */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -49,7 +48,6 @@
 		142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRequest.swift; sourceTree = "<group>"; };
 		142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerListTableViewController.swift; sourceTree = "<group>"; };
 		142BE6231B262E370059B1B2 /* RequestEditorViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestEditorViewController.swift; sourceTree = "<group>"; };
-		142BE6261B262E630059B1B2 /* Main.storyboard */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = file.storyboard; path = Main.storyboard; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,7 +91,6 @@
 			children = (
 				142BE5F81B23C8790059B1B2 /* AppDelegate.swift */,
 				142BE5FA1B23C8790059B1B2 /* ViewController.swift */,
-				142BE6261B262E630059B1B2 /* Main.storyboard */,
 				142BE6181B262DDD0059B1B2 /* Extends.swift */,
 				142BE6191B262DDD0059B1B2 /* ListTableViewCell.swift */,
 				142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */,
@@ -216,7 +213,6 @@
 				142BE5FE1B23C8790059B1B2 /* Main.storyboard in Resources */,
 				142BE6031B23C8790059B1B2 /* LaunchScreen.xib in Resources */,
 				142BE6001B23C8790059B1B2 /* Images.xcassets in Resources */,
-				142BE6271B262E630059B1B2 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
