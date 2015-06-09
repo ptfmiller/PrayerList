@@ -14,7 +14,7 @@
 		142BE6031B23C8790059B1B2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 142BE6011B23C8790059B1B2 /* LaunchScreen.xib */; };
 		142BE60F1B23C8790059B1B2 /* PrayerListTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE60E1B23C8790059B1B2 /* PrayerListTests.swift */; };
 		142BE61D1B262DDD0059B1B2 /* Extends.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6181B262DDD0059B1B2 /* Extends.swift */; };
-		142BE61E1B262DDD0059B1B2 /* ListTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6191B262DDD0059B1B2 /* ListTableViewCell.swift */; };
+		142BE61E1B262DDD0059B1B2 /* RequestTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6191B262DDD0059B1B2 /* RequestTableViewCell.swift */; };
 		142BE61F1B262DDD0059B1B2 /* MasterList.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE61A1B262DDD0059B1B2 /* MasterList.swift */; };
 		142BE6211B262DDD0059B1B2 /* PrayerRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */; };
 		142BE6241B262E370059B1B2 /* PrayerListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */; };
@@ -43,7 +43,7 @@
 		142BE60D1B23C8790059B1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		142BE60E1B23C8790059B1B2 /* PrayerListTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PrayerListTests.swift; sourceTree = "<group>"; };
 		142BE6181B262DDD0059B1B2 /* Extends.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Extends.swift; sourceTree = "<group>"; };
-		142BE6191B262DDD0059B1B2 /* ListTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ListTableViewCell.swift; sourceTree = "<group>"; };
+		142BE6191B262DDD0059B1B2 /* RequestTableViewCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RequestTableViewCell.swift; sourceTree = "<group>"; };
 		142BE61A1B262DDD0059B1B2 /* MasterList.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterList.swift; sourceTree = "<group>"; };
 		142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerRequest.swift; sourceTree = "<group>"; };
 		142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayerListTableViewController.swift; sourceTree = "<group>"; };
@@ -92,7 +92,7 @@
 				142BE5F81B23C8790059B1B2 /* AppDelegate.swift */,
 				142BE5FA1B23C8790059B1B2 /* ViewController.swift */,
 				142BE6181B262DDD0059B1B2 /* Extends.swift */,
-				142BE6191B262DDD0059B1B2 /* ListTableViewCell.swift */,
+				142BE6191B262DDD0059B1B2 /* RequestTableViewCell.swift */,
 				142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */,
 				142BE6231B262E370059B1B2 /* RequestEditorViewController.swift */,
 				142BE61A1B262DDD0059B1B2 /* MasterList.swift */,
@@ -235,7 +235,7 @@
 				142BE61F1B262DDD0059B1B2 /* MasterList.swift in Sources */,
 				142BE6211B262DDD0059B1B2 /* PrayerRequest.swift in Sources */,
 				142BE6241B262E370059B1B2 /* PrayerListTableViewController.swift in Sources */,
-				142BE61E1B262DDD0059B1B2 /* ListTableViewCell.swift in Sources */,
+				142BE61E1B262DDD0059B1B2 /* RequestTableViewCell.swift in Sources */,
 				142BE61D1B262DDD0059B1B2 /* Extends.swift in Sources */,
 				142BE5F91B23C8790059B1B2 /* AppDelegate.swift in Sources */,
 			);
