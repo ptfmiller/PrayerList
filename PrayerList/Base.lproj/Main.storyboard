@@ -2,6 +2,7 @@
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="7702" systemVersion="14D136" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="bql-vn-Vh5">
     <dependencies>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="7701"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--Prayer List-->
@@ -18,6 +19,9 @@
                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="QMX-UP-or3" id="Ol5-LU-m2c">
                                     <autoresizingMask key="autoresizingMask"/>
                                 </tableViewCellContentView>
+                                <connections>
+                                    <segue destination="CBE-mb-VcP" kind="presentation" identifier="editRequest" id="zta-Gw-RdO"/>
+                                </connections>
                             </tableViewCell>
                         </prototypes>
                         <connections>
@@ -25,11 +29,71 @@
                             <outlet property="delegate" destination="Y9G-cq-Cmy" id="TtR-Ih-H5A"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" id="T4o-iH-LRM"/>
+                    <navigationItem key="navigationItem" title="Prayer List" id="T4o-iH-LRM">
+                        <barButtonItem key="leftBarButtonItem" title="Settings" id="EKv-TO-661"/>
+                        <barButtonItem key="rightBarButtonItem" systemItem="add" id="bgF-el-fdA">
+                            <connections>
+                                <segue destination="CBE-mb-VcP" kind="presentation" identifier="addRequest" id="5ga-K7-dm8"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Wa-E6-U8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1642" y="258"/>
+            <point key="canvasLocation" x="1062" y="260"/>
+        </scene>
+        <!--Prayer Request-->
+        <scene sceneID="pMn-pc-qUu">
+            <objects>
+                <viewController id="Uuk-Mb-EnM" customClass="RequestEditorViewController" customModule="PrayerList" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="cjE-hf-qio"/>
+                        <viewControllerLayoutGuide type="bottom" id="ES7-ON-Nmx"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cFE-mx-aiN">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Request Name" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="I9P-gk-1Nl">
+                                <rect key="frame" x="45" y="114" width="114" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="khL-vF-0pZ">
+                                <rect key="frame" x="16" y="153" width="568" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="khL-vF-0pZ" firstAttribute="top" secondItem="I9P-gk-1Nl" secondAttribute="bottom" constant="18" id="0C1-f1-DtS"/>
+                            <constraint firstItem="khL-vF-0pZ" firstAttribute="trailing" secondItem="cFE-mx-aiN" secondAttribute="trailingMargin" id="1fs-2O-JGI"/>
+                            <constraint firstItem="I9P-gk-1Nl" firstAttribute="top" secondItem="cjE-hf-qio" secondAttribute="bottom" constant="50" id="D1F-sb-aeH"/>
+                            <constraint firstItem="khL-vF-0pZ" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" id="sUo-TK-Mpt"/>
+                            <constraint firstItem="I9P-gk-1Nl" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" constant="29" id="zPx-IU-U6k"/>
+                        </constraints>
+                    </view>
+                    <navigationItem key="navigationItem" title="Prayer Request" id="QLQ-4k-LV7">
+                        <barButtonItem key="leftBarButtonItem" systemItem="cancel" id="L3F-0U-USg">
+                            <connections>
+                                <action selector="cancelWasPressed:" destination="Uuk-Mb-EnM" id="XIZ-yL-uGR"/>
+                            </connections>
+                        </barButtonItem>
+                        <barButtonItem key="rightBarButtonItem" systemItem="save" id="ZbS-Gr-SAT">
+                            <connections>
+                                <action selector="saveWasPressed:" destination="Uuk-Mb-EnM" id="akh-Uq-lF5"/>
+                            </connections>
+                        </barButtonItem>
+                    </navigationItem>
+                    <connections>
+                        <outlet property="requestNameTextField" destination="khL-vF-0pZ" id="oJz-EM-COd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Hqf-zU-bDD" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2636" y="260"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="B6L-bD-F3K">
@@ -47,7 +111,28 @@
                 </navigationController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="O24-be-bHF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="830" y="258"/>
+            <point key="canvasLocation" x="250" y="260"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="QKL-g8-0tX">
+            <objects>
+                <navigationController automaticallyAdjustsScrollViewInsets="NO" id="CBE-mb-VcP" sceneMemberID="viewController">
+                    <toolbarItems/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="CMk-Yv-TAK">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <nil name="viewControllers"/>
+                    <connections>
+                        <segue destination="Uuk-Mb-EnM" kind="relationship" relationship="rootViewController" id="cKk-bK-cKF"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="4Ab-Kd-tng" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1824" y="260"/>
         </scene>
     </scenes>
+    <inferredMetricsTieBreakers>
+        <segue reference="zta-Gw-RdO"/>
+    </inferredMetricsTieBreakers>
 </document>

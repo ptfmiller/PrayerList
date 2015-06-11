@@ -12,6 +12,7 @@ import UIKit
 class RequestEditorViewController: UIViewController {
     
     var prayerRequest: PrayerRequest?
+    
     @IBOutlet var requestNameTextField: UITextField!
     
     override func viewDidLoad() {
@@ -36,7 +37,7 @@ class RequestEditorViewController: UIViewController {
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    @IBAction func doneWasPressed(sender: AnyObject) {
+    @IBAction func saveWasPressed(sender: AnyObject) {
         if (prayerRequest != nil) {
             // this is really ugly, need to find a way to fix this implementation
             prayerRequest?.requestName = requestNameTextField.text
@@ -45,7 +46,7 @@ class RequestEditorViewController: UIViewController {
         }
         self.dismissSelf()
     }
-    
+
     @IBAction func cancelWasPressed(sender: AnyObject) {
         self.dismissSelf()
     }
