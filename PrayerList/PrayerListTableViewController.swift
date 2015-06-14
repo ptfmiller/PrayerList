@@ -7,7 +7,7 @@
 //
 
 import UIKit
-//import Parse
+import Parse
 
 
 class PrayerListTableViewController: UITableViewController {
@@ -18,6 +18,7 @@ class PrayerListTableViewController: UITableViewController {
         super.viewDidLoad()
         
         masterList.startUp()
+        
         
     }
     

@@ -7,7 +7,7 @@
 //
 
 import Foundation
-//import Parse
+import Parse
 
 let _secondsInDay: NSTimeInterval = 24 * 60 * 60
 let _secondsInFourWeeks: NSTimeInterval = 27 * _secondsInDay // 27 days instead of 28 because we are inclusive on both sides
