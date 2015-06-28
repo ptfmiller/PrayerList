@@ -65,13 +65,48 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rf2-lD-Sdc">
+                                <rect key="frame" x="45" y="207" width="53" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ePK-IP-yPO">
+                                <rect key="frame" x="16" y="236" width="568" height="62"/>
+                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="62" id="g2f-lf-CQs"/>
+                                </constraints>
+                                <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frequency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O97-xY-C4y">
+                                <rect key="frame" x="45" y="326" width="81" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <pickerView contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fIv-4Y-FOQ">
+                                <rect key="frame" x="16" y="355" width="568" height="162"/>
+                            </pickerView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="khL-vF-0pZ" firstAttribute="top" secondItem="I9P-gk-1Nl" secondAttribute="bottom" constant="18" id="0C1-f1-DtS"/>
                             <constraint firstItem="khL-vF-0pZ" firstAttribute="trailing" secondItem="cFE-mx-aiN" secondAttribute="trailingMargin" id="1fs-2O-JGI"/>
+                            <constraint firstItem="O97-xY-C4y" firstAttribute="top" secondItem="ePK-IP-yPO" secondAttribute="bottom" constant="28" id="49f-tT-PCJ"/>
+                            <constraint firstItem="fIv-4Y-FOQ" firstAttribute="trailing" secondItem="cFE-mx-aiN" secondAttribute="trailingMargin" id="8Hv-Tj-qJz"/>
+                            <constraint firstItem="Rf2-lD-Sdc" firstAttribute="top" secondItem="khL-vF-0pZ" secondAttribute="bottom" constant="24" id="BBd-6z-qd5"/>
+                            <constraint firstItem="ePK-IP-yPO" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" id="Chh-v7-rIF"/>
                             <constraint firstItem="I9P-gk-1Nl" firstAttribute="top" secondItem="cjE-hf-qio" secondAttribute="bottom" constant="50" id="D1F-sb-aeH"/>
+                            <constraint firstItem="Rf2-lD-Sdc" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" constant="29" id="E04-EZ-hrj"/>
+                            <constraint firstItem="O97-xY-C4y" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" constant="29" id="G0x-V8-lER"/>
+                            <constraint firstItem="ePK-IP-yPO" firstAttribute="top" secondItem="Rf2-lD-Sdc" secondAttribute="bottom" constant="8" id="eTY-Bb-qRd"/>
+                            <constraint firstItem="fIv-4Y-FOQ" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" id="lwX-1N-1fu"/>
                             <constraint firstItem="khL-vF-0pZ" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" id="sUo-TK-Mpt"/>
+                            <constraint firstItem="fIv-4Y-FOQ" firstAttribute="top" secondItem="O97-xY-C4y" secondAttribute="bottom" constant="8" id="tsN-Nw-QcG"/>
+                            <constraint firstItem="ePK-IP-yPO" firstAttribute="trailing" secondItem="cFE-mx-aiN" secondAttribute="trailingMargin" id="yZH-n5-5NS"/>
                             <constraint firstItem="I9P-gk-1Nl" firstAttribute="leading" secondItem="cFE-mx-aiN" secondAttribute="leadingMargin" constant="29" id="zPx-IU-U6k"/>
                         </constraints>
                     </view>
@@ -88,6 +123,8 @@
                         </barButtonItem>
                     </navigationItem>
                     <connections>
+                        <outlet property="detailsTextView" destination="ePK-IP-yPO" id="9rZ-0C-seC"/>
+                        <outlet property="frequencyPicker" destination="fIv-4Y-FOQ" id="Fgr-2A-dck"/>
                         <outlet property="requestNameTextField" destination="khL-vF-0pZ" id="oJz-EM-COd"/>
                     </connections>
                 </viewController>
@@ -133,6 +170,6 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="zta-Gw-RdO"/>
+        <segue reference="5ga-K7-dm8"/>
     </inferredMetricsTieBreakers>
 </document>

@@ -19,18 +19,36 @@ let _lastDayOfWeek = _daysInWeek
 
 class PrayerRequest {
     enum Frequency: Int {
-        case daily, weekly, biweekly, fourweekly
+        case daily = 1, weekly, biweekly, fourweekly
+        
+        // Init function serves to enable us to reinstate from the dictionary of a PFObject
+        init(choice: Int?) {
+            if choice != nil {
+                switch choice! {
+                case 1: self = .daily
+                case 2: self = .weekly
+                case 3: self = .biweekly
+                case 4: self = .fourweekly
+                default: self = .daily
+                }
+            }
+            else {self = .daily}
+        }
     }
     
-    var requestName: String = ""
+    
+    var requestName: String? = ""
     var details: String? = ""
     var dateFrameStart: NSDate = NSDate()
     var dateFrameEnd: NSDate = NSDate()
+    var frequency: Frequency = Frequency(choice: nil)
     var dates: [NSDate] = []
-    var frequency: Frequency = .weekly
+    var saveObject = PFObject(className: "PrayerRequest")
+
     
-    init(name: String, details: String?, frequency: Frequency) {
-        requestName = name
+    // Will deprecate this once we have the Parse integration finished
+    init(requestName: String?, details: String?, frequency: Frequency?) {
+        self.requestName = requestName
         self.details = details
         
         let calendar = NSCalendar.currentCalendar()
@@ -43,10 +61,61 @@ class PrayerRequest {
         endComponents.weekday = _lastDayOfWeek
         dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
         
-        self.frequency = frequency
+        if frequency != nil {
+            self.frequency = frequency!
+        } else {
+            self.frequency = Frequency(choice: nil)
+        }
         refreshDates()
     }
     
+    init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, saveObject: PFObject) {
+        self.requestName = requestName
+        self.details = details
+        self.dateFrameStart = dateFrameStart
+        self.dateFrameEnd = dateFrameEnd
+        self.dates = dates
+        self.frequency = frequency
+        self.saveObject = saveObject
+    }
+    
+    // Init from a retrieved PFObject
+    convenience init(savedObject: PFObject) {
+        let requestName = savedObject["requestName"] as! String
+        var details: String? = nil
+        if (savedObject["details"] !== NSNull()) {
+            details = savedObject["details"] as! String?
+        }
+        let dateFrameStart = savedObject["dateFrameStart"] as! NSDate
+        let dateFrameEnd = savedObject["dateFrameEnd"] as! NSDate
+        let dates = savedObject["dates"] as! [NSDate]
+        let frequency = Frequency(choice: savedObject["frequency"] as! Int?)
+        self.init(requestName: requestName, details: details, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd, dates: dates, frequency: frequency, saveObject: savedObject)
+    }
+    
+    func save() {
+        if (self.requestName == nil) {
+            saveObject["requestName"] = NSNull()
+        } else {
+            saveObject["requestName"] = self.requestName
+        }
+        if (self.details == nil) {
+            saveObject["details"] = NSNull()
+        } else {
+            saveObject["details"] = self.details
+        }
+        saveObject["dateFrameStart"] = self.dateFrameStart
+        saveObject["dateFrameEnd"] = self.dateFrameEnd
+        saveObject["dates"] = self.dates
+        saveObject["frequency"] = self.frequency.rawValue
+        saveObject.saveInBackground()
+    }
+    
+    func delete() {
+        saveObject.deleteInBackground()
+    }
+    
+    // Need to update this to remove some abberant behavior. If we refresh something with a not daily recurrence, we could have the same item twice this week. Or not at all. Daily recurrences should simply have all dates cleared and added back in. The way to do this is probably moving the dates clearing to within the cases individually
     func refreshDates() {
         dates = []
         let masterList = MasterList.sharedInstance
@@ -161,4 +230,7 @@ class PrayerRequest {
         let components = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: date)
         return calendar.dateFromComponents(components)!
     }
+    
+
+    
 }

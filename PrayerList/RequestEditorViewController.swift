@@ -12,8 +12,11 @@ import Parse
 class RequestEditorViewController: UIViewController {
     
     var prayerRequest: PrayerRequest?
+    var isNewRequest: Bool = false
     
     @IBOutlet var requestNameTextField: UITextField!
+    @IBOutlet var detailsTextView: UITextView!
+    @IBOutlet var frequencyPicker: UIPickerView!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -21,6 +24,11 @@ class RequestEditorViewController: UIViewController {
         // Do any additional setup after loading the view.
         if (prayerRequest != nil) {
             requestNameTextField.text = prayerRequest?.requestName
+            if (prayerRequest?.details != nil) {
+                detailsTextView.text = prayerRequest?.details
+            } else {
+                detailsTextView.text = ""
+            }
         }
     }
     
@@ -38,16 +46,19 @@ class RequestEditorViewController: UIViewController {
     }
     
     @IBAction func saveWasPressed(sender: AnyObject) {
-        if (prayerRequest != nil) {
-            // this is really ugly, need to find a way to fix this implementation
-            prayerRequest?.requestName = requestNameTextField.text
-        } else {
-            
-        }
+        // this is really ugly, need to find a way to fix this implementation
+        prayerRequest?.requestName = requestNameTextField.text
+        prayerRequest?.details = detailsTextView.text
+        prayerRequest?.save()
+        let masterList = MasterList.sharedInstance
+        masterList.fillCalendar()
         self.dismissSelf()
     }
 
     @IBAction func cancelWasPressed(sender: AnyObject) {
+        if (isNewRequest) {
+            self.prayerRequest?.delete()
+        }
         self.dismissSelf()
     }
     

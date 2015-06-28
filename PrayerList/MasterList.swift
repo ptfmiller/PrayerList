@@ -16,23 +16,10 @@ private let _MasterList = MasterList()
 
 class MasterList {
     
-    let prayerListItemNames = [
-        "Jamie",
-        "June",
-        "Community Group",
-        "Matt Becker",
-        "Julian Cha",
-        "Dad",
-        "Mom",
-        "Heather",
-        "Andrew",
-        "Cannon",
-        "Melissa and Andy"
-    ]
     
     var _fetchedResultsController: NSFetchedResultsController?
     var requestsList: [PrayerRequest] = []
-    var daySelections = [Day.Sunday: false, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: false]
+    var daySelections = [Day.Sunday: true, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: true]
     var calendarList = Dictionary<NSDate, [PrayerRequest]>()
     
     
@@ -70,30 +57,28 @@ class MasterList {
     func length() -> Int {
         let today = flattenDate(NSDate())
         if calendarList[today] != nil {
+            var returnval = calendarList[today]!.count
             return calendarList[today]!.count
         } else {return 0}
     }
     
-    
-    func addPrayerRequest(name: String) {
-        let newRequest = PrayerRequest(name: name, details: nil, frequency: PrayerRequest.Frequency.weekly)
-        requestsList.append(newRequest)
-    }
-    
     func deletePrayerRequest(index: Int) {
+        let prayerRequest = requestsList[index] as PrayerRequest
+        prayerRequest.delete()
         requestsList.removeAtIndex(index)
     }
     
-    func updatePrayerRequest(index: Int, newName: String) {
-        requestsList[index].requestName = newName
-    }
-    
-    
     func startUp() {
-        // To be removed later
-        for item in prayerListItemNames {
-            self.addPrayerRequest(item)
+        
+        // Will need to update this when we move to several users model
+        var query = PFQuery(className: "PrayerRequest")
+        if let requests = query.findObjects() {
+            for item in requests {
+                let restoredRequest = PrayerRequest(savedObject: item as! PFObject)
+                requestsList.append(restoredRequest)
+            }
         }
+        
         self.fillCalendar()
         /*       let testObject = PFObject(className: "TestObject")
         testObject["foo"] = "bar"
@@ -128,18 +113,16 @@ class MasterList {
         return bool
     }
     
-    // Not currently in use
-    func requestName(indexPath: NSIndexPath) -> String {
-        let date = flattenDate(NSDate())
-        let listForToday = calendarList[date]
-        let prayerRequest = listForToday![indexPath.row]
-        return prayerRequest.requestName
-    }
-    
     func getTodaysList() -> [PrayerRequest] {
         return calendarList[flattenDate(NSDate())]!
     }
     
+    func refreshAllRequests() {
+        for request in requestsList {
+            request.refreshDates()
+            request.save()
+        }
+    }
 }
 
 

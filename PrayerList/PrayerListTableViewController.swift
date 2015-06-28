@@ -62,7 +62,13 @@ class PrayerListTableViewController: UITableViewController {
             let indexPath = self.tableView.indexPathForCell(cell)
             let navigationController = segue.destinationViewController as! UINavigationController
             let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
-            requestEditorViewController.prayerRequest = masterList.requestsList[indexPath!.row]
+            requestEditorViewController.prayerRequest = masterList.getTodaysList()[indexPath!.row]
+        }
+        if (segue.identifier == "addRequest") {
+            let navigationController = segue.destinationViewController as! UINavigationController
+            let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
+            requestEditorViewController.isNewRequest = true
+            requestEditorViewController.prayerRequest = PrayerRequest(requestName: nil, details: nil, frequency: nil)
         }
         // Get the new view controller using [segue destinationViewController].
         // Pass the selected object to the new view controller.
