@@ -1,0 +1,41 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>IDESourceControlProjectFavoriteDictionaryKey</key>
+	<false/>
+	<key>IDESourceControlProjectIdentifier</key>
+	<string>0D1E1FCB-B834-4B95-B349-019C7827DEA5</string>
+	<key>IDESourceControlProjectName</key>
+	<string>PrayerList</string>
+	<key>IDESourceControlProjectOriginsDictionary</key>
+	<dict>
+		<key>C49DD931B06C153BE913999852E6871D6CE1FA99</key>
+		<string>https://github.com/ptfmiller/PrayerList.git</string>
+	</dict>
+	<key>IDESourceControlProjectPath</key>
+	<string>PrayerList.xcodeproj</string>
+	<key>IDESourceControlProjectRelativeInstallPathDictionary</key>
+	<dict>
+		<key>C49DD931B06C153BE913999852E6871D6CE1FA99</key>
+		<string>../..</string>
+	</dict>
+	<key>IDESourceControlProjectURL</key>
+	<string>https://github.com/ptfmiller/PrayerList.git</string>
+	<key>IDESourceControlProjectVersion</key>
+	<integer>111</integer>
+	<key>IDESourceControlProjectWCCIdentifier</key>
+	<string>C49DD931B06C153BE913999852E6871D6CE1FA99</string>
+	<key>IDESourceControlProjectWCConfigurations</key>
+	<array>
+		<dict>
+			<key>IDESourceControlRepositoryExtensionIdentifierKey</key>
+			<string>public.vcs.git</string>
+			<key>IDESourceControlWCCIdentifierKey</key>
+			<string>C49DD931B06C153BE913999852E6871D6CE1FA99</string>
+			<key>IDESourceControlWCCName</key>
+			<string>PrayerList</string>
+		</dict>
+	</array>
+</dict>
+</plist>
