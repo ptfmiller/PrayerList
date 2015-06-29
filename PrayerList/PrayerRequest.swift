@@ -34,6 +34,36 @@ class PrayerRequest {
             }
             else {self = .daily}
         }
+        
+        init(choice: String) {
+            switch choice {
+            case "Daily": self = .daily
+            case "Weekly": self = .weekly
+            case "Once every two weeks": self = .biweekly
+            case "Biweekly": self = .biweekly
+            case "Once every four weeks": self = .fourweekly
+            case "Fourweekly": self = .fourweekly
+            default: self = .daily
+            }
+        }
+        
+        // Not currently used and not sure whether I will end up using it.
+        func frequencyName() -> String {
+            switch self {
+            case .daily: return "Daily"
+            case .weekly: return "Weekly"
+            case .biweekly: return "Once every two weeks"
+            case .fourweekly: return "Once every four weeks"
+            }
+        }
+        
+        static func numberOfFrequencyOptions() -> Int {
+            return 4
+        }
+        
+        static func listOfOptions() -> [String] {
+            return ["Daily", "Weekly", "Once every two weeks", "Once every four weeks"]
+        }
     }
     
     

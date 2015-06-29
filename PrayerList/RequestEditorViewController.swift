@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class RequestEditorViewController: UIViewController {
+class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
     
     var prayerRequest: PrayerRequest?
     var isNewRequest: Bool = false
@@ -22,6 +22,8 @@ class RequestEditorViewController: UIViewController {
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.frequencyPicker.dataSource = self
+        self.frequencyPicker.delegate = self
         if (prayerRequest != nil) {
             requestNameTextField.text = prayerRequest?.requestName
             if (prayerRequest?.details != nil) {
@@ -29,8 +31,25 @@ class RequestEditorViewController: UIViewController {
             } else {
                 detailsTextView.text = ""
             }
+            self.frequencyPicker.selectRow(prayerRequest!.frequency.rawValue - 1, inComponent: 0, animated: true)
         }
     }
+    
+    
+    
+    // Pickerview necessities follow
+    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
+        return 1
+    }
+    
+    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
+        return PrayerRequest.Frequency.numberOfFrequencyOptions()
+    }
+    
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+        return PrayerRequest.Frequency.listOfOptions()[row]
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -49,6 +68,8 @@ class RequestEditorViewController: UIViewController {
         // this is really ugly, need to find a way to fix this implementation
         prayerRequest?.requestName = requestNameTextField.text
         prayerRequest?.details = detailsTextView.text
+        let frequencySelection = frequencyPicker.selectedRowInComponent(0)
+        prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance
         masterList.fillCalendar()
