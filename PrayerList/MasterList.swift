@@ -62,10 +62,19 @@ class MasterList {
         } else {return 0}
     }
     
+    func deletePrayerRequest(request: PrayerRequest) {
+        for var i = 0; i < requestsList.count; ++i {
+            if (self.requestsList[i] === request) {
+                deletePrayerRequest(i)
+            }
+        }
+    }
+    
     func deletePrayerRequest(index: Int) {
         let prayerRequest = requestsList[index] as PrayerRequest
         prayerRequest.delete()
         requestsList.removeAtIndex(index)
+        self.fillCalendar()
     }
     
     func startUp() {

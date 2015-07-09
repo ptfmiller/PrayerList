@@ -76,7 +76,7 @@ class PrayerRequest {
     var saveObject = PFObject(className: "PrayerRequest")
 
     
-    // Will deprecate this once we have the Parse integration finished
+    // Is still used by the requestEditor when you add a request.
     init(requestName: String?, details: String?, frequency: Frequency?) {
         self.requestName = requestName
         self.details = details

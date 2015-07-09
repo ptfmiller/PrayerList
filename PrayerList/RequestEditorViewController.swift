@@ -17,6 +17,19 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
     @IBOutlet var requestNameTextField: UITextField!
     @IBOutlet var detailsTextView: UITextView!
     @IBOutlet var frequencyPicker: UIPickerView!
+    @IBOutlet var deleteButton: UIButton!
+    
+    override func viewWillAppear(animated: Bool) {
+        detailsTextView.layer.cornerRadius = 5
+        detailsTextView.layer.borderColor = UIColor.grayColor().CGColor
+        detailsTextView.layer.borderWidth = 1
+        
+        deleteButton.setBackgroundImage(UIImage(named: "iphone_delete_button.png")?.stretchableImageWithLeftCapWidth(8, topCapHeight: 0), forState: UIControlState.Normal)
+        deleteButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
+        deleteButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
+        deleteButton.titleLabel?.shadowColor = UIColor.lightGrayColor()
+        deleteButton.titleLabel?.shadowOffset = CGSizeMake(0, -1)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -72,6 +85,7 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
         prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance
+        // So this is not updating the calendar to retrieve the object once you save it, so the calendar remains without the item. Need to fix.
         masterList.fillCalendar()
         self.dismissSelf()
     }
@@ -80,6 +94,13 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
         if (isNewRequest) {
             self.prayerRequest?.delete()
         }
+        self.dismissSelf()
+    }
+    
+    @IBAction func deleteWasPressed(sender: AnyObject) {
+        // NEED TO ADD SOME CONFIRMATION BUTTON HERE
+        let masterList = MasterList.sharedInstance
+        masterList.deletePrayerRequest(self.prayerRequest!)
         self.dismissSelf()
     }
     
