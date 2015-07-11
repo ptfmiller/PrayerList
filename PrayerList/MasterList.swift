@@ -175,15 +175,55 @@ class MasterList {
         }
         */
         
-        // Will need to update this when we move to several users model
-        var query = PFQuery(className: "PrayerRequest")
-        if let requests = query.findObjects() {
-            for item in requests {
-                let restoredRequest = PrayerRequest(savedObject: item as! PFObject)
-                requestsList.append(restoredRequest)
+        /*
+        var user = PFUser()
+        user.username = "ptfmiller@gmail.com"
+        user.password = "S1mplexity"
+        user.email = "ptfmiller@gmail.com"
+        
+        user.signUpInBackgroundWithBlock {
+        (succeeded: Bool, error: NSError?) -> Void in
+        if let error = error {
+        let errorString = error.userInfo?["error"] as? NSString
+        // Show the errorString somewhere and let the user try again.
+        print(errorString)
+        } else {
+        // Hooray! Let them use the app now.
+        }
+        }
+        */
+        
+        
+        var currentUser = PFUser.currentUser()
+        if currentUser != nil {
+            // Do stuff with the user
+            // Will need to update this when we move to several users model
+            var query = PFQuery(className: "PrayerRequest")
+            query.whereKey("user", equalTo: currentUser!)
+            if let requests = query.findObjects() {
+                for item in requests {
+                    let restoredRequest = PrayerRequest(savedObject: item as! PFObject)
+                    requestsList.append(restoredRequest)
+                }
+            }
+        } else {
+            // Show the signup or login screen
+            PFUser.logInWithUsernameInBackground("ptfmiller@gmail.com", password:"S1mplexity") {
+                (user: PFUser?, error: NSError?) -> Void in
+                if user != nil {
+                    // Do stuff after successful login.
+                    
+                } else {
+                    // The login failed. Check error to see why.
+                }
             }
         }
         
+        
+        
+        
+        
+
         self.fillCalendar()
         /*       let testObject = PFObject(className: "TestObject")
         testObject["foo"] = "bar"
@@ -227,6 +267,11 @@ class MasterList {
             request.refreshDates()
             request.save()
         }
+    }
+    
+    func deviceID() -> String {
+        let device = UIDevice().identifierForVendor
+        return device.description
     }
 }
 

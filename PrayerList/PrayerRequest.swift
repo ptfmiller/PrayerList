@@ -138,6 +138,10 @@ class PrayerRequest {
         saveObject["dateFrameEnd"] = self.dateFrameEnd
         saveObject["dates"] = self.dates
         saveObject["frequency"] = self.frequency.rawValue
+        
+        // Store the current user for retrieving later
+        var user = PFUser.currentUser()
+        saveObject["user"] = user
         saveObject.saveInBackground()
     }
     

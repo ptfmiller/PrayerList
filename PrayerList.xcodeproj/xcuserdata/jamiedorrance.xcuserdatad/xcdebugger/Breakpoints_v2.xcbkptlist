@@ -26,11 +26,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PrayerList/MasterList.swift"
-            timestampString = "458105460.799533"
+            timestampString = "458277773.079029"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "209"
-            endingLineNumber = "209"
+            startingLineNumber = "249"
+            endingLineNumber = "249"
             landmarkName = "flattenDate(_:)"
             landmarkType = "5">
          </BreakpointContent>
@@ -111,8 +111,8 @@
             endingColumnNumber = "9223372036854775807"
             startingLineNumber = "81"
             endingLineNumber = "81"
-            landmarkName = "PrayerRequest"
-            landmarkType = "3">
+            landmarkName = "init(requestName:details:frequency:)"
+            landmarkType = "5">
          </BreakpointContent>
       </BreakpointProxy>
       <BreakpointProxy
@@ -138,11 +138,11 @@
             ignoreCount = "0"
             continueAfterRunningActions = "No"
             filePath = "PrayerList/PrayerRequest.swift"
-            timestampString = "457236373.943621"
+            timestampString = "458277635.008242"
             startingColumnNumber = "9223372036854775807"
             endingColumnNumber = "9223372036854775807"
-            startingLineNumber = "150"
-            endingLineNumber = "150"
+            startingLineNumber = "154"
+            endingLineNumber = "154"
             landmarkName = "refreshDates()"
             landmarkType = "5">
          </BreakpointContent>
