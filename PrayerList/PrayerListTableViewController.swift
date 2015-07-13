@@ -16,10 +16,26 @@ class PrayerListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+    }
+    
+    override func viewWillAppear(animated: Bool) {
+        self.loginToPrayerList()
+    }
+    
+    func loginToPrayerList() {
+        var currentUser = PFUser.currentUser()
         
-        masterList.startUp()
-        
-        
+        if (currentUser != nil) {
+            // Do stuff with the user
+            masterList.startUp()
+        } else {
+            // Show the signup or login screen
+            
+            // Not working right now.
+            let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            let loginScreen = storyboard.instantiateViewControllerWithIdentifier("loginScreen") as! loginViewController
+            self.presentViewController(loginScreen, animated: true, completion: nil)
+        }
     }
     
     override func viewDidAppear(animated: Bool) {

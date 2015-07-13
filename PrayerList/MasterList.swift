@@ -206,24 +206,8 @@ class MasterList {
                     requestsList.append(restoredRequest)
                 }
             }
-        } else {
-            // Show the signup or login screen
-            PFUser.logInWithUsernameInBackground("ptfmiller@gmail.com", password:"S1mplexity") {
-                (user: PFUser?, error: NSError?) -> Void in
-                if user != nil {
-                    // Do stuff after successful login.
-                    
-                } else {
-                    // The login failed. Check error to see why.
-                }
-            }
         }
         
-        
-        
-        
-        
-
         self.fillCalendar()
         /*       let testObject = PFObject(className: "TestObject")
         testObject["foo"] = "bar"

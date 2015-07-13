@@ -34,6 +34,7 @@
 		142BE66F1B2D2F280059B1B2 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 142BE66E1B2D2F280059B1B2 /* SystemConfiguration.framework */; };
 		142BE6711B2D2F330059B1B2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 142BE6701B2D2F330059B1B2 /* libz.dylib */; };
 		142BE6731B2D2F3E0059B1B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 142BE6721B2D2F3E0059B1B2 /* libsqlite3.dylib */; };
+		14EC37AB1B535D2200CFEF51 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC37AA1B535D2200CFEF51 /* loginViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -76,6 +77,7 @@
 		142BE66E1B2D2F280059B1B2 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		142BE6701B2D2F330059B1B2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		142BE6721B2D2F3E0059B1B2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
+		14EC37AA1B535D2200CFEF51 /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -154,6 +156,7 @@
 				142BE61A1B262DDD0059B1B2 /* MasterList.swift */,
 				142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */,
 				142BE5FC1B23C8790059B1B2 /* Main.storyboard */,
+				14EC37AA1B535D2200CFEF51 /* loginViewController.swift */,
 				142BE5FF1B23C8790059B1B2 /* Images.xcassets */,
 				142BE6011B23C8790059B1B2 /* LaunchScreen.xib */,
 				142BE5F61B23C8790059B1B2 /* Supporting Files */,
@@ -294,6 +297,7 @@
 				142BE61E1B262DDD0059B1B2 /* RequestTableViewCell.swift in Sources */,
 				142BE61D1B262DDD0059B1B2 /* Extends.swift in Sources */,
 				142BE5F91B23C8790059B1B2 /* AppDelegate.swift in Sources */,
+				14EC37AB1B535D2200CFEF51 /* loginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

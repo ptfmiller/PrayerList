@@ -5,6 +5,60 @@
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
+        <!--Login View Controller-->
+        <scene sceneID="ljR-H4-OyT">
+            <objects>
+                <viewController id="xLP-QD-Lku" customClass="loginViewController" customModule="PrayerList" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="J03-r2-jSB"/>
+                        <viewControllerLayoutGuide type="bottom" id="zc1-7D-M1u"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" restorationIdentifier="loginScreen" id="lnB-9a-Elc">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="R4J-Nq-zVO">
+                                <rect key="frame" x="50" y="37" width="501" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="6Fa-Al-DVb">
+                                <rect key="frame" x="50" y="66" width="501" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7QS-WH-c6e">
+                                <rect key="frame" x="90" y="130" width="420" height="30"/>
+                                <state key="normal" title="Log In">
+                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginWasPressed:" destination="xLP-QD-Lku" eventType="touchUpInside" id="1tX-rx-fKx"/>
+                                </connections>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="6Fa-Al-DVb" firstAttribute="top" secondItem="R4J-Nq-zVO" secondAttribute="bottom" constant="-1" id="4rS-uf-kRF"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="7QS-WH-c6e" secondAttribute="trailing" constant="74" id="78U-wt-7rZ"/>
+                            <constraint firstItem="R4J-Nq-zVO" firstAttribute="leading" secondItem="lnB-9a-Elc" secondAttribute="leadingMargin" constant="34" id="BAd-ya-aaf"/>
+                            <constraint firstItem="7QS-WH-c6e" firstAttribute="leading" secondItem="lnB-9a-Elc" secondAttribute="leadingMargin" constant="74" id="Fz9-07-TPA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="6Fa-Al-DVb" secondAttribute="trailing" constant="33" id="O9S-g8-9Jq"/>
+                            <constraint firstItem="7QS-WH-c6e" firstAttribute="top" secondItem="6Fa-Al-DVb" secondAttribute="bottom" constant="34" id="U8x-NL-I8G"/>
+                            <constraint firstItem="6Fa-Al-DVb" firstAttribute="leading" secondItem="lnB-9a-Elc" secondAttribute="leadingMargin" constant="34" id="VTo-eO-wHS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="R4J-Nq-zVO" secondAttribute="trailing" constant="33" id="Weh-BG-SsL"/>
+                            <constraint firstItem="R4J-Nq-zVO" firstAttribute="top" secondItem="J03-r2-jSB" secondAttribute="bottom" constant="17" id="izd-UR-I7V"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="R4J-Nq-zVO" id="7t3-YN-NzS"/>
+                        <outlet property="passwordTextField" destination="6Fa-Al-DVb" id="Dhf-DM-ntS"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="ZjB-Y4-CmP" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1062" y="-446"/>
+        </scene>
         <!--Prayer List-->
         <scene sceneID="snN-WM-L1E">
             <objects>
