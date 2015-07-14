@@ -107,6 +107,23 @@ class PrayerRequest {
         self.dates = dates
         self.frequency = frequency
         self.saveObject = saveObject
+        
+        let today = NSDate()
+        if today.compare(self.dateFrameEnd) == .OrderedDescending {
+            // We have exited the date frame of the current randomization
+            let calendar = NSCalendar.currentCalendar()
+
+            let startComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+            startComponents.weekday = _firstDayOfWeek
+            self.dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
+            
+            let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInFourWeeks))
+            endComponents.weekday = _lastDayOfWeek
+            self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
+            
+            self.refreshDates()
+            self.save()
+        }
     }
     
     // Init from a retrieved PFObject

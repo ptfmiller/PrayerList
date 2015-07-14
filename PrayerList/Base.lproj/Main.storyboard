@@ -57,7 +57,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="ZjB-Y4-CmP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1062" y="-446"/>
+            <point key="canvasLocation" x="1824" y="-448"/>
         </scene>
         <!--Prayer List-->
         <scene sceneID="snN-WM-L1E">
@@ -91,6 +91,9 @@
                             </connections>
                         </barButtonItem>
                     </navigationItem>
+                    <connections>
+                        <segue destination="xLP-QD-Lku" kind="presentation" identifier="login" id="xZX-vF-6zZ"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4Wa-E6-U8o" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>

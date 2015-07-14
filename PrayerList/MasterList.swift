@@ -77,6 +77,7 @@ class MasterList {
         self.fillCalendar()
     }
     
+    // This function is currently not very safe. I.e. if you try to call it while PFUser is not logged in you will accomplish nothing, and it will not let you know. 
     func startUp() {
         // For inputing data
         /*

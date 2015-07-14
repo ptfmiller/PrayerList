@@ -19,7 +19,10 @@ class loginViewController: UIViewController {
         // Do any additional setup after loading the view.
         
         self.emailTextField.placeholder = "email"
+        self.emailTextField.keyboardType = UIKeyboardType.EmailAddress
+        
         self.passwordTextField.placeholder = "password"
+        self.passwordTextField.secureTextEntry = true
 
     }
 

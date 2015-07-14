@@ -23,18 +23,24 @@ class PrayerListTableViewController: UITableViewController {
     }
     
     func loginToPrayerList() {
+        
+        
         var currentUser = PFUser.currentUser()
         
         if (currentUser != nil) {
             // Do stuff with the user
             masterList.startUp()
+
         } else {
             // Show the signup or login screen
             
             // Not working right now.
-            let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            let loginScreen = storyboard.instantiateViewControllerWithIdentifier("loginScreen") as! loginViewController
-            self.presentViewController(loginScreen, animated: true, completion: nil)
+            
+            self.performSegueWithIdentifier("login", sender: nil)
+            
+            //let storyboard = UIStoryboard(name: "Main", bundle: nil)
+            //let loginScreen = storyboard.instantiateViewControllerWithIdentifier("loginScreen") as! loginViewController
+            //self.presentViewController(loginScreen, animated: true, completion: nil)
         }
     }
     

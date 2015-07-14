@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource {
+class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
     
     var prayerRequest: PrayerRequest?
     var isNewRequest: Bool = false
@@ -99,9 +99,16 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBAction func deleteWasPressed(sender: AnyObject) {
         // NEED TO ADD SOME CONFIRMATION BUTTON HERE
-        let masterList = MasterList.sharedInstance
-        masterList.deletePrayerRequest(self.prayerRequest!)
-        self.dismissSelf()
+        let alertView = UIAlertView(title: "Delete this prayer request", message: "Please confirm", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
+        alertView.show()        
+    }
+
+    func alertView(alertView: UIAlertView, clickedButtonAtIndex buttonIndex: Int) {
+        if buttonIndex != alertView.cancelButtonIndex {
+            let masterList = MasterList.sharedInstance
+            masterList.deletePrayerRequest(self.prayerRequest!)
+            self.dismissSelf()
+        }
     }
     
     /*
