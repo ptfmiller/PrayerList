@@ -210,12 +210,9 @@ class MasterList {
         }
         
         self.fillCalendar()
-        /*       let testObject = PFObject(className: "TestObject")
-        testObject["foo"] = "bar"
-        testObject.saveInBackgroundWithBlock { (success: Bool, error: NSError?) -> Void in
-        println("Object has been saved.")
-        }
-        */ }
+    
+        //PFUser.logOut()
+    }
     
     func fillCalendar() {
         self.calendarList = Dictionary<NSDate, [PrayerRequest]>()

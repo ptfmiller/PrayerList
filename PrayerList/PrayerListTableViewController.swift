@@ -16,10 +16,10 @@ class PrayerListTableViewController: UITableViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        self.loginToPrayerList()
     }
     
     override func viewWillAppear(animated: Bool) {
-        self.loginToPrayerList()
     }
     
     func loginToPrayerList() {
