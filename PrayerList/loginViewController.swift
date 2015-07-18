@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class loginViewController: UIViewController {
+class LoginViewController: UIViewController {
 
     @IBOutlet var emailTextField: UITextField!
     @IBOutlet var passwordTextField: UITextField!
@@ -57,6 +57,8 @@ class loginViewController: UIViewController {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
                     // Do stuff after successful login.
+                    let masterList = MasterList.sharedInstance
+                    masterList.startUp()
                     self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
                 } else {
                     // The login failed. Check error to see why.

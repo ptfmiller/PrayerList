@@ -16,8 +16,6 @@ private let _MasterList = MasterList()
 
 class MasterList {
     
-    
-    var _fetchedResultsController: NSFetchedResultsController?
     var requestsList: [PrayerRequest] = []
     var daySelections = [Day.Sunday: false, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: false]
     var calendarList = Dictionary<NSDate, [PrayerRequest]>()
@@ -53,13 +51,13 @@ class MasterList {
     }
     
     
-    // To be removed/edited later
-    func length() -> Int {
+    // Returns the length of today's list for the numberOfRowsInSection method
+    func todaysListLength() -> Int {
         let today = flattenDate(NSDate())
-        if calendarList[today] != nil {
-            var returnval = calendarList[today]!.count
-            return calendarList[today]!.count
-        } else {return 0}
+        if let length = calendarList[today]?.count {
+            return length
+        }
+        else {return 0}
     }
     
     func deletePrayerRequest(request: PrayerRequest) {
@@ -204,7 +202,7 @@ class MasterList {
             if let requests = query.findObjects() {
                 for item in requests {
                     let restoredRequest = PrayerRequest(savedObject: item as! PFObject)
-                    requestsList.append(restoredRequest)
+                    self.addPrayerRequest(restoredRequest)
                 }
             }
         }
@@ -212,6 +210,10 @@ class MasterList {
         self.fillCalendar()
     
         //PFUser.logOut()
+    }
+    
+    func addPrayerRequest(prayerRequest: PrayerRequest) {
+        self.requestsList.append(prayerRequest)
     }
     
     func fillCalendar() {
@@ -251,9 +253,11 @@ class MasterList {
         }
     }
     
-    func deviceID() -> String {
-        let device = UIDevice().identifierForVendor
-        return device.description
+    func clear() {
+        self.requestsList = []
+        self.daySelections = [Day.Sunday: false, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: false]
+        self.calendarList = Dictionary<NSDate, [PrayerRequest]>()
+        
     }
 }
 

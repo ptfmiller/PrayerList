@@ -11,17 +11,6 @@ import Parse
 
 class RequestTableViewCell: UITableViewCell {
     
-    override func awakeFromNib() {
-        super.awakeFromNib()
-        // Initialization code
-    }
-    
-    override func setSelected(selected: Bool, animated: Bool) {
-        super.setSelected(selected, animated: animated)
-        
-        // Configure the view for the selected state
-    }
-    
     func configureCell(indexpath: NSIndexPath) {
         let masterList = MasterList.sharedInstance
         self.textLabel!.text = masterList.getTodaysList()[indexpath.row].requestName

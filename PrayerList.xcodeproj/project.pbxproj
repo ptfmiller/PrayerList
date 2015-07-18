@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		142BE5F91B23C8790059B1B2 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE5F81B23C8790059B1B2 /* AppDelegate.swift */; };
-		142BE5FB1B23C8790059B1B2 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 142BE5FA1B23C8790059B1B2 /* ViewController.swift */; };
 		142BE5FE1B23C8790059B1B2 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 142BE5FC1B23C8790059B1B2 /* Main.storyboard */; };
 		142BE6001B23C8790059B1B2 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 142BE5FF1B23C8790059B1B2 /* Images.xcassets */; };
 		142BE6031B23C8790059B1B2 /* LaunchScreen.xib in Resources */ = {isa = PBXBuildFile; fileRef = 142BE6011B23C8790059B1B2 /* LaunchScreen.xib */; };
@@ -35,7 +34,8 @@
 		142BE6711B2D2F330059B1B2 /* libz.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 142BE6701B2D2F330059B1B2 /* libz.dylib */; };
 		142BE6731B2D2F3E0059B1B2 /* libsqlite3.dylib in Frameworks */ = {isa = PBXBuildFile; fileRef = 142BE6721B2D2F3E0059B1B2 /* libsqlite3.dylib */; };
 		1481FEA41B58A310002139DB /* SignUpViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 1481FEA31B58A310002139DB /* SignUpViewController.swift */; };
-		14EC37AB1B535D2200CFEF51 /* loginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC37AA1B535D2200CFEF51 /* loginViewController.swift */; };
+		14EC37AB1B535D2200CFEF51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC37AA1B535D2200CFEF51 /* LoginViewController.swift */; };
+		14F4F7121B59E4DD004AC4B2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F4F7111B59E4DD004AC4B2 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -52,7 +52,6 @@
 		142BE5F31B23C8790059B1B2 /* PrayerList.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = PrayerList.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		142BE5F71B23C8790059B1B2 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		142BE5F81B23C8790059B1B2 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
-		142BE5FA1B23C8790059B1B2 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		142BE5FD1B23C8790059B1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		142BE5FF1B23C8790059B1B2 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		142BE6021B23C8790059B1B2 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.xib; name = Base; path = Base.lproj/LaunchScreen.xib; sourceTree = "<group>"; };
@@ -79,7 +78,8 @@
 		142BE6701B2D2F330059B1B2 /* libz.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libz.dylib; path = usr/lib/libz.dylib; sourceTree = SDKROOT; };
 		142BE6721B2D2F3E0059B1B2 /* libsqlite3.dylib */ = {isa = PBXFileReference; lastKnownFileType = "compiled.mach-o.dylib"; name = libsqlite3.dylib; path = usr/lib/libsqlite3.dylib; sourceTree = SDKROOT; };
 		1481FEA31B58A310002139DB /* SignUpViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SignUpViewController.swift; sourceTree = "<group>"; };
-		14EC37AA1B535D2200CFEF51 /* loginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = loginViewController.swift; sourceTree = "<group>"; };
+		14EC37AA1B535D2200CFEF51 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
+		14F4F7111B59E4DD004AC4B2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -150,7 +150,6 @@
 			isa = PBXGroup;
 			children = (
 				142BE5F81B23C8790059B1B2 /* AppDelegate.swift */,
-				142BE5FA1B23C8790059B1B2 /* ViewController.swift */,
 				142BE6181B262DDD0059B1B2 /* Extends.swift */,
 				142BE6191B262DDD0059B1B2 /* RequestTableViewCell.swift */,
 				142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */,
@@ -159,7 +158,8 @@
 				142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */,
 				142BE5FC1B23C8790059B1B2 /* Main.storyboard */,
 				1481FEA31B58A310002139DB /* SignUpViewController.swift */,
-				14EC37AA1B535D2200CFEF51 /* loginViewController.swift */,
+				14EC37AA1B535D2200CFEF51 /* LoginViewController.swift */,
+				14F4F7111B59E4DD004AC4B2 /* SettingsViewController.swift */,
 				142BE5FF1B23C8790059B1B2 /* Images.xcassets */,
 				142BE6011B23C8790059B1B2 /* LaunchScreen.xib */,
 				142BE5F61B23C8790059B1B2 /* Supporting Files */,
@@ -292,16 +292,16 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				142BE5FB1B23C8790059B1B2 /* ViewController.swift in Sources */,
 				142BE6251B262E370059B1B2 /* RequestEditorViewController.swift in Sources */,
 				142BE61F1B262DDD0059B1B2 /* MasterList.swift in Sources */,
 				142BE6211B262DDD0059B1B2 /* PrayerRequest.swift in Sources */,
+				14F4F7121B59E4DD004AC4B2 /* SettingsViewController.swift in Sources */,
 				1481FEA41B58A310002139DB /* SignUpViewController.swift in Sources */,
 				142BE6241B262E370059B1B2 /* PrayerListTableViewController.swift in Sources */,
 				142BE61E1B262DDD0059B1B2 /* RequestTableViewCell.swift in Sources */,
 				142BE61D1B262DDD0059B1B2 /* Extends.swift in Sources */,
 				142BE5F91B23C8790059B1B2 /* AppDelegate.swift in Sources */,
-				14EC37AB1B535D2200CFEF51 /* loginViewController.swift in Sources */,
+				14EC37AB1B535D2200CFEF51 /* LoginViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

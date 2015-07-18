@@ -85,6 +85,9 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
         prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance
+        if self.isNewRequest {
+            masterList.addPrayerRequest(self.prayerRequest!)
+        }
         // So this is not updating the calendar to retrieve the object once you save it, so the calendar remains without the item. Need to fix.
         masterList.fillCalendar()
         self.dismissSelf()
@@ -99,7 +102,7 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
     
     @IBAction func deleteWasPressed(sender: AnyObject) {
         // NEED TO ADD SOME CONFIRMATION BUTTON HERE
-        let alertView = UIAlertView(title: "Delete this prayer request", message: "Please confirm", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
+        let alertView = UIAlertView(title: "Delete this prayer request?", message: "Please confirm", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
         alertView.show()        
     }
 

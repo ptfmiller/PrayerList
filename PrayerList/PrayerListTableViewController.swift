@@ -13,40 +13,44 @@ import Parse
 class PrayerListTableViewController: UITableViewController {
     
     let masterList = MasterList.sharedInstance
+    var isLoggedIn = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.loginToPrayerList()
-    }
-    
-    override func viewWillAppear(animated: Bool) {
-    }
-    
-    func loginToPrayerList() {
         
-        
-        var currentUser = PFUser.currentUser()
-        
-        if (currentUser != nil) {
-            // Do stuff with the user
+        // Get ready to go with .startUp if the user is already logged in. Otherwise, the viewWillAppear function will direct them to login
+        if PFUser.currentUser() != nil {
             masterList.startUp()
-
-        } else {
-            // Show the signup or login screen
-            
-            // Not working right now.
-            
-            self.performSegueWithIdentifier("login", sender: nil)
-            
-            //let storyboard = UIStoryboard(name: "Main", bundle: nil)
-            //let loginScreen = storyboard.instantiateViewControllerWithIdentifier("loginScreen") as! loginViewController
-            //self.presentViewController(loginScreen, animated: true, completion: nil)
+            self.isLoggedIn = true
         }
     }
     
-    override func viewDidAppear(animated: Bool) {
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        self.loginToPrayerList()
+        masterList.fillCalendar()
+        //PFUser.logOut()
         self.tableView.reloadData()
     }
+    
+    func loginToPrayerList() {
+        // Don't waste time logging in if you are already
+        if self.isLoggedIn {
+            return
+        }
+        
+        // Check whether you are already logged in
+        var currentUser = PFUser.currentUser()
+        if (currentUser != nil) {
+            // Record that the user is already logged in
+            self.isLoggedIn = true
+        }
+        else {
+            // Show the signup or login screen
+            self.performSegueWithIdentifier("login", sender: nil)
+        }
+    }
+    
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -64,7 +68,7 @@ class PrayerListTableViewController: UITableViewController {
     override func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         // #warning Incomplete method implementation.
         // Return the number of rows in the section.
-        return masterList.length()
+        return masterList.todaysListLength()
     }
     
     
@@ -86,15 +90,15 @@ class PrayerListTableViewController: UITableViewController {
             let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
             requestEditorViewController.prayerRequest = masterList.getTodaysList()[indexPath!.row]
         }
-        if (segue.identifier == "addRequest") {
+        else if (segue.identifier == "addRequest") {
             let navigationController = segue.destinationViewController as! UINavigationController
             let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
             requestEditorViewController.isNewRequest = true
             requestEditorViewController.prayerRequest = PrayerRequest(requestName: nil, details: nil, frequency: nil)
         }
-        // Get the new view controller using [segue destinationViewController].
-        // Pass the selected object to the new view controller.
+        else if (segue.identifier == "settings") {
+            let settingsViewController = segue.destinationViewController as!  SettingsViewController
+            settingsViewController.prayerListTableViewController = self
+        }
     }
-    
-    
 }
