@@ -11,9 +11,15 @@ import Parse
 
 class RequestTableViewCell: UITableViewCell {
     
-    func configureCell(indexpath: NSIndexPath) {
-        let masterList = MasterList.sharedInstance
-        self.textLabel!.text = masterList.getTodaysList()[indexpath.row].requestName
+    enum ListType {
+        case today, master
     }
     
+    func configureCell(indexpath: NSIndexPath, listType: ListType) {
+        let masterList = MasterList.sharedInstance
+        switch listType {
+        case .today: self.textLabel!.text = masterList.getTodaysList()[indexpath.row].requestName
+        case .master: self.textLabel!.text = masterList.requestsList[indexpath.row].requestName
+        }
+    }
 }

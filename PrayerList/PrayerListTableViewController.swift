@@ -74,7 +74,7 @@ class PrayerListTableViewController: UITableViewController {
     
     override func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCellWithIdentifier("prayerRequest", forIndexPath: indexPath) as! RequestTableViewCell
-        cell.configureCell(indexPath)
+        cell.configureCell(indexPath, listType: RequestTableViewCell.ListType.today)
         return cell
     }
     

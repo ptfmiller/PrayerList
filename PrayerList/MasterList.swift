@@ -60,6 +60,10 @@ class MasterList {
         else {return 0}
     }
     
+    func masterListLength() -> Int {
+        return requestsList.count
+    }
+    
     func deletePrayerRequest(request: PrayerRequest) {
         for var i = 0; i < requestsList.count; ++i {
             if (self.requestsList[i] === request) {
