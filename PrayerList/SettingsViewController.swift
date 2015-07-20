@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
         let masterList = MasterList.sharedInstance
         masterList.clear()
         self.prayerListTableViewController?.isLoggedIn = false
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     

@@ -86,13 +86,11 @@ class PrayerListTableViewController: UITableViewController {
         if (segue.identifier == "editRequest") {
             let cell = sender as! UITableViewCell
             let indexPath = self.tableView.indexPathForCell(cell)
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
+            let requestEditorViewController = segue.destinationViewController as! RequestEditorViewController
             requestEditorViewController.prayerRequest = masterList.getTodaysList()[indexPath!.row]
         }
         else if (segue.identifier == "addRequest") {
-            let navigationController = segue.destinationViewController as! UINavigationController
-            let requestEditorViewController = navigationController.topViewController as! RequestEditorViewController
+            let requestEditorViewController = segue.destinationViewController as! RequestEditorViewController
             requestEditorViewController.isNewRequest = true
             requestEditorViewController.prayerRequest = PrayerRequest(requestName: nil, details: nil, frequency: nil)
         }

@@ -63,8 +63,9 @@ class LoginViewController: UIViewController {
                 } else {
                     // The login failed. Check error to see why.
                     let alert = UIAlertView()
+                    let errorString = error?.userInfo?["error"] as? String
                     alert.title = "Login error!"
-                    alert.message = error?.description
+                    alert.message = errorString
                     alert.addButtonWithTitle("OK")
                     alert.show()
                 }

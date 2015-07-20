@@ -61,11 +61,11 @@ class SignUpViewController: UIViewController {
             user.signUpInBackgroundWithBlock {
                 (succeeded: Bool, error: NSError?) -> Void in
                 if let error = error {
-                    let errorString = error.userInfo?["error"] as? NSString
+                    let errorString = error.userInfo?["error"] as? String
                     // Show the errorString somewhere and let the user try again.
                     let alert = UIAlertView()
                     alert.title = "Sign up error!"
-                    alert.message = error.description
+                    alert.message = errorString
                     alert.addButtonWithTitle("OK")
                     alert.show()
                 } else {

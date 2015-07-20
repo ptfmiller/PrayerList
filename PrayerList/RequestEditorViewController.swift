@@ -74,7 +74,8 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
     }
     
     func dismissSelf() {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        //self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+        self.navigationController?.popViewControllerAnimated(true)
     }
     
     @IBAction func saveWasPressed(sender: AnyObject) {
@@ -93,12 +94,12 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
         self.dismissSelf()
     }
 
-    @IBAction func cancelWasPressed(sender: AnyObject) {
+    /*@IBAction func cancelWasPressed(sender: AnyObject) {
         if (isNewRequest) {
             self.prayerRequest?.delete()
         }
         self.dismissSelf()
-    }
+    }*/
     
     @IBAction func deleteWasPressed(sender: AnyObject) {
         // NEED TO ADD SOME CONFIRMATION BUTTON HERE
