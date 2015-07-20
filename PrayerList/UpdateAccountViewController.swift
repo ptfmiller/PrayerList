@@ -41,9 +41,6 @@ class UpdateAccountViewController: UIViewController {
         // Dispose of any resources that can be recreated.
     }
     
-    @IBAction func backWasPressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-    }
 
     @IBAction func updateAccountWasPressed(sender: AnyObject) {
         // Check to see whether both of either new fields were filled out

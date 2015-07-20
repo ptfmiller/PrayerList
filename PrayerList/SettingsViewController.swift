@@ -24,10 +24,6 @@ class SettingsViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
-    @IBAction func backWasPressed(sender: AnyObject) {
-        self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-    }
 
     @IBAction func logoutWasPressed(sender: AnyObject) {
         PFUser.logOut()
@@ -35,9 +31,6 @@ class SettingsViewController: UIViewController {
         masterList.clear()
         self.prayerListTableViewController?.isLoggedIn = false
         self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    @IBAction func viewAllPrayerTopicsWasPressed(sender: AnyObject) {
     }
     
     

@@ -111,10 +111,10 @@
                             <outlet property="delegate" destination="Y9G-cq-Cmy" id="TtR-Ih-H5A"/>
                         </connections>
                     </tableView>
-                    <navigationItem key="navigationItem" title="Prayer List" id="T4o-iH-LRM">
+                    <navigationItem key="navigationItem" title="Today's List" id="T4o-iH-LRM">
                         <barButtonItem key="leftBarButtonItem" title="Settings" id="EKv-TO-661">
                             <connections>
-                                <segue destination="gkG-s7-8DW" kind="presentation" identifier="settings" id="wD2-fJ-DHk"/>
+                                <segue destination="gkG-s7-8DW" kind="show" identifier="settings" id="wD2-fJ-DHk"/>
                             </connections>
                         </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="bgF-el-fdA">
@@ -299,19 +299,19 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Frequency" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="O97-xY-C4y">
                                 <rect key="frame" x="32" y="283" width="81" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Details" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Rf2-lD-Sdc">
                                 <rect key="frame" x="32" y="177" width="53" height="21"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Iy0-Os-5Gd">
                                 <rect key="frame" x="278" y="417" width="44" height="30"/>
                                 <state key="normal" title="Delete">
-                                    <color key="titleColor" cocoaTouchSystemColor="darkTextColor"/>
+                                    <color key="titleColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
                                     <action selector="deleteWasPressed:" destination="Uuk-Mb-EnM" eventType="touchUpInside" id="nBU-Vn-21T"/>
@@ -372,7 +372,7 @@
             </objects>
             <point key="canvasLocation" x="2642" y="260"/>
         </scene>
-        <!--Update Account View Controller-->
+        <!--Update Account Info-->
         <scene sceneID="h3b-tq-aRG">
             <objects>
                 <viewController id="tyj-HY-SJB" customClass="UpdateAccountViewController" customModule="PrayerList" customModuleProvider="target" sceneMemberID="viewController">
@@ -385,17 +385,17 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="95S-Fs-kf4">
-                                <rect key="frame" x="59" y="79" width="482" height="30"/>
+                                <rect key="frame" x="59" y="129" width="482" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="QT5-U2-Bee">
-                                <rect key="frame" x="59" y="179" width="482" height="30"/>
+                                <rect key="frame" x="59" y="229" width="482" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="yHJ-w7-ctm">
-                                <rect key="frame" x="59" y="208" width="482" height="30"/>
+                                <rect key="frame" x="59" y="258" width="482" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="zWQ-UF-p17"/>
                                 </constraints>
@@ -403,12 +403,17 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dkl-nB-Aln">
-                                <rect key="frame" x="59" y="28" width="482" height="30"/>
+                                <rect key="frame" x="59" y="78" width="482" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dZy-5c-YFq">
+                                <rect key="frame" x="59" y="158" width="482" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="MJh-WF-eRa">
-                                <rect key="frame" x="105" y="270" width="112" height="30"/>
+                                <rect key="frame" x="244" y="320" width="112" height="30"/>
                                 <state key="normal" title="Update Account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -416,20 +421,6 @@
                                     <action selector="updateAccountWasPressed:" destination="tyj-HY-SJB" eventType="touchUpInside" id="BVM-hl-StH"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="UKM-PB-UUS">
-                                <rect key="frame" x="460" y="270" width="35" height="30"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="backWasPressed:" destination="tyj-HY-SJB" eventType="touchUpInside" id="YXR-Ji-hNS"/>
-                                </connections>
-                            </button>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="dZy-5c-YFq">
-                                <rect key="frame" x="59" y="108" width="482" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -439,21 +430,28 @@
                             <constraint firstItem="dZy-5c-YFq" firstAttribute="leading" secondItem="4J9-WY-7PH" secondAttribute="leadingMargin" constant="43" id="Esl-MD-mhk"/>
                             <constraint firstItem="dZy-5c-YFq" firstAttribute="top" secondItem="95S-Fs-kf4" secondAttribute="bottom" constant="-1" id="GVu-U2-1Xc"/>
                             <constraint firstAttribute="trailingMargin" secondItem="yHJ-w7-ctm" secondAttribute="trailing" constant="43" id="IId-vQ-6I7"/>
-                            <constraint firstItem="UKM-PB-UUS" firstAttribute="top" secondItem="yHJ-w7-ctm" secondAttribute="bottom" constant="32" id="J4v-Ko-Z6P"/>
                             <constraint firstAttribute="trailingMargin" secondItem="95S-Fs-kf4" secondAttribute="trailing" constant="43" id="KpQ-4z-NhB"/>
                             <constraint firstItem="Dkl-nB-Aln" firstAttribute="leading" secondItem="4J9-WY-7PH" secondAttribute="leadingMargin" constant="43" id="Mx4-Py-JYT"/>
                             <constraint firstAttribute="trailingMargin" secondItem="QT5-U2-Bee" secondAttribute="trailing" constant="43" id="Opw-M5-HxS"/>
                             <constraint firstItem="yHJ-w7-ctm" firstAttribute="top" secondItem="QT5-U2-Bee" secondAttribute="bottom" constant="-1" id="PeO-KP-Ryc"/>
                             <constraint firstItem="yHJ-w7-ctm" firstAttribute="leading" secondItem="4J9-WY-7PH" secondAttribute="leadingMargin" constant="43" id="Saq-Vq-WfE"/>
+                            <constraint firstAttribute="centerX" secondItem="MJh-WF-eRa" secondAttribute="centerX" id="VJP-1c-KyB"/>
                             <constraint firstItem="95S-Fs-kf4" firstAttribute="top" secondItem="Dkl-nB-Aln" secondAttribute="bottom" constant="21" id="Vd5-7L-wKe"/>
                             <constraint firstItem="MJh-WF-eRa" firstAttribute="top" secondItem="yHJ-w7-ctm" secondAttribute="bottom" constant="32" id="amK-ke-Hmw"/>
                             <constraint firstItem="QT5-U2-Bee" firstAttribute="leading" secondItem="4J9-WY-7PH" secondAttribute="leadingMargin" constant="43" id="eQM-80-MXA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="dZy-5c-YFq" secondAttribute="trailing" constant="43" id="efF-sV-fBN"/>
-                            <constraint firstItem="Dkl-nB-Aln" firstAttribute="top" secondItem="jfm-wn-S98" secondAttribute="bottom" constant="8" id="i4x-fr-K5m"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="UKM-PB-UUS" secondAttribute="trailing" constant="89" id="pFg-ct-gXq"/>
-                            <constraint firstItem="MJh-WF-eRa" firstAttribute="leading" secondItem="4J9-WY-7PH" secondAttribute="leadingMargin" constant="89" id="qDr-of-N8y"/>
+                            <constraint firstItem="Dkl-nB-Aln" firstAttribute="top" secondItem="jfm-wn-S98" secondAttribute="bottom" constant="14" id="i4x-fr-K5m"/>
+                            <constraint firstAttribute="centerX" secondItem="MJh-WF-eRa" secondAttribute="centerX" constant="139" id="jp7-0Q-DjC"/>
+                            <constraint firstAttribute="centerX" secondItem="MJh-WF-eRa" secondAttribute="centerX" id="xh4-Dw-Zp0"/>
                         </constraints>
+                        <variation key="default">
+                            <mask key="constraints">
+                                <exclude reference="jp7-0Q-DjC"/>
+                                <exclude reference="xh4-Dw-Zp0"/>
+                            </mask>
+                        </variation>
                     </view>
+                    <navigationItem key="navigationItem" title="Update Account Info" id="8Ve-td-6GQ"/>
                     <connections>
                         <outlet property="currentPassword" destination="Dkl-nB-Aln" id="wAp-ty-mqj"/>
                         <outlet property="newEmail" destination="QT5-U2-Bee" id="410-IF-d8W"/>
@@ -466,7 +464,7 @@
             </objects>
             <point key="canvasLocation" x="2642" y="1006"/>
         </scene>
-        <!--Master List Table View Controller-->
+        <!--All Prayer Topics-->
         <scene sceneID="3tH-DB-nSa">
             <objects>
                 <tableViewController id="JbS-ay-P7a" customClass="MasterListTableViewController" customModule="PrayerList" customModuleProvider="target" sceneMemberID="viewController">
@@ -487,6 +485,7 @@
                             <outlet property="delegate" destination="JbS-ay-P7a" id="4jt-jc-sGs"/>
                         </connections>
                     </tableView>
+                    <navigationItem key="navigationItem" title="All Prayer Topics" id="vTb-RV-bC3"/>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="hm5-Kv-QN0" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -528,7 +527,7 @@
             </objects>
             <point key="canvasLocation" x="1830" y="260"/>
         </scene>
-        <!--Settings View Controller-->
+        <!--Settings-->
         <scene sceneID="f47-XO-97m">
             <objects>
                 <viewController id="gkG-s7-8DW" customClass="SettingsViewController" customModule="PrayerList" customModuleProvider="target" sceneMemberID="viewController">
@@ -540,17 +539,11 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="XZM-Ab-AWA">
-                                <rect key="frame" x="16" y="28" width="46" height="30"/>
-                                <state key="normal" title="Back">
-                                    <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                                <connections>
-                                    <action selector="backWasPressed:" destination="gkG-s7-8DW" eventType="touchUpInside" id="tfL-pR-n7T"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2z-Bz-LWv">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="j2z-Bz-LWv">
                                 <rect key="frame" x="274" y="78" width="53" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="53" id="vhG-th-dmh"/>
+                                </constraints>
                                 <state key="normal" title="Logout">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -558,28 +551,44 @@
                                     <action selector="logoutWasPressed:" destination="gkG-s7-8DW" eventType="touchUpInside" id="C8A-vT-62f"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2p-gf-qyd">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S2p-gf-qyd">
                                 <rect key="frame" x="226" y="130" width="149" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="149" id="WG7-Iv-gkZ"/>
+                                </constraints>
                                 <state key="normal" title="View all prayer topics">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <action selector="viewAllPrayerTopicsWasPressed:" destination="gkG-s7-8DW" eventType="touchUpInside" id="iGG-k8-oOf"/>
-                                    <segue destination="JbS-ay-P7a" kind="presentation" id="OAM-Id-r5C"/>
+                                    <segue destination="JbS-ay-P7a" kind="show" id="OAM-Id-r5C"/>
                                 </connections>
                             </button>
-                            <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4V-Y0-jgq">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="X4V-Y0-jgq">
                                 <rect key="frame" x="244" y="186" width="112" height="30"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="112" id="fgp-La-Bxa"/>
+                                </constraints>
                                 <state key="normal" title="Update Account">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
-                                    <segue destination="tyj-HY-SJB" kind="presentation" id="VgE-2y-JUh"/>
+                                    <segue destination="tyj-HY-SJB" kind="show" id="VgE-2y-JUh"/>
                                 </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstAttribute="centerX" secondItem="X4V-Y0-jgq" secondAttribute="centerX" id="1h8-di-o6a"/>
+                            <constraint firstItem="j2z-Bz-LWv" firstAttribute="top" secondItem="YC1-82-WUm" secondAttribute="bottom" constant="14" id="JEG-1o-6ma"/>
+                            <constraint firstItem="X4V-Y0-jgq" firstAttribute="top" secondItem="S2p-gf-qyd" secondAttribute="bottom" constant="26" id="R5V-vy-XCY"/>
+                            <constraint firstAttribute="centerX" secondItem="S2p-gf-qyd" secondAttribute="centerX" constant="-0.5" id="fPL-Mu-PCm"/>
+                            <constraint firstAttribute="centerX" secondItem="j2z-Bz-LWv" secondAttribute="centerX" constant="-0.5" id="hu3-RT-VIR"/>
+                            <constraint firstItem="S2p-gf-qyd" firstAttribute="top" secondItem="j2z-Bz-LWv" secondAttribute="bottom" constant="22" id="z1o-xX-IQJ"/>
+                        </constraints>
                     </view>
+                    <navigationItem key="navigationItem" title="Settings" id="c6c-1U-W4F">
+                        <barButtonItem key="backBarButtonItem" title="Today's List" id="4W2-NH-dtS"/>
+                    </navigationItem>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Dm8-vz-5Oc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
