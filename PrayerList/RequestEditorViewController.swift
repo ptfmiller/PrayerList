@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
+class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
     
     var prayerRequest: PrayerRequest?
     var isNewRequest: Bool = false
@@ -20,10 +20,11 @@ class RequestEditorViewController: UIViewController, UIPickerViewDelegate, UIPic
     @IBOutlet var deleteButton: UIButton!
     
     override func viewWillAppear(animated: Bool) {
+        /*
         detailsTextView.layer.cornerRadius = 5
         detailsTextView.layer.borderColor = UIColor.grayColor().CGColor
         detailsTextView.layer.borderWidth = 1
-        
+        */
         deleteButton.setBackgroundImage(UIImage(named: "iphone_delete_button.png")?.stretchableImageWithLeftCapWidth(8, topCapHeight: 0), forState: UIControlState.Normal)
         deleteButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
         deleteButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
