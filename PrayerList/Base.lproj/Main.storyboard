@@ -214,7 +214,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Oqd-v1-jze">
-                                <rect key="frame" x="273" y="137" width="55" height="30"/>
+                                <rect key="frame" x="273" y="141" width="55" height="30"/>
                                 <state key="normal" title="Sign Up">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -224,12 +224,12 @@
                                 </connections>
                             </button>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="lnA-g1-6oQ">
-                                <rect key="frame" x="50" y="99" width="501" height="30"/>
+                                <rect key="frame" x="50" y="103" width="501" height="30"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="loT-y0-hjI">
-                                <rect key="frame" x="279" y="175" width="48" height="30"/>
+                                <rect key="frame" x="279" y="179" width="48" height="30"/>
                                 <state key="normal" title="Cancel">
                                     <color key="titleShadowColor" white="0.5" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
@@ -248,7 +248,7 @@
                             <constraint firstAttribute="trailingMargin" secondItem="lnA-g1-6oQ" secondAttribute="trailing" constant="33" id="Nfl-Js-Zrs"/>
                             <constraint firstAttribute="trailingMargin" secondItem="bLh-m7-zl7" secondAttribute="trailing" constant="33" id="OB5-LH-tHL"/>
                             <constraint firstItem="Uav-78-9Eh" firstAttribute="top" secondItem="hNZ-VZ-RvV" secondAttribute="bottom" constant="24" id="Vb8-Z0-PCY"/>
-                            <constraint firstItem="lnA-g1-6oQ" firstAttribute="top" secondItem="bLh-m7-zl7" secondAttribute="bottom" constant="-4" id="XOB-52-ILq"/>
+                            <constraint firstItem="lnA-g1-6oQ" firstAttribute="top" secondItem="bLh-m7-zl7" secondAttribute="bottom" id="XOB-52-ILq"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Uav-78-9Eh" secondAttribute="trailing" constant="33" id="Xfb-Sa-B9M"/>
                             <constraint firstItem="bLh-m7-zl7" firstAttribute="top" secondItem="Uav-78-9Eh" secondAttribute="bottom" constant="-1" id="blP-zz-KrM"/>
                             <constraint firstItem="Uav-78-9Eh" firstAttribute="leading" secondItem="F1b-0b-jQd" secondAttribute="leadingMargin" constant="34" id="mam-jz-NMa"/>
@@ -307,7 +307,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="onA-20-kZq">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
@@ -643,7 +643,7 @@
                                                 <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="SIH-dU-JUC">
                                                     <rect key="frame" x="0.0" y="0.0" width="600" height="43"/>
                                                     <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <mutableString key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</mutableString>
+                                                    <string key="text">Lorem ipsum dolor sit er elit lamet, consectetaur cillium adipisicing pecu, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum. Nam liber te conscient to factor tum poen legum odioque civiuda.</string>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                                 </textView>
