@@ -84,7 +84,10 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         prayerRequest?.requestName = requestNameTextField.text
         prayerRequest?.details = detailsTextView.text
         let frequencySelection = frequencyPicker.selectedRowInComponent(0)
-        prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
+        if prayerRequest?.frequency != PrayerRequest.Frequency(choice: frequencySelection + 1) {
+            prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
+            prayerRequest?.refreshDates()
+        }
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance
         if self.isNewRequest {
@@ -103,7 +106,6 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     }*/
     
     @IBAction func deleteWasPressed(sender: AnyObject) {
-        // NEED TO ADD SOME CONFIRMATION BUTTON HERE
         let alertView = UIAlertView(title: "Delete this prayer request?", message: "Please confirm", delegate: self, cancelButtonTitle: "Cancel", otherButtonTitles: "Delete")
         alertView.show()        
     }

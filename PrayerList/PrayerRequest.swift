@@ -10,8 +10,8 @@ import Foundation
 import Parse
 
 let _secondsInDay: NSTimeInterval = 24 * 60 * 60
-let _secondsInFourWeeks: NSTimeInterval = 27 * _secondsInDay // 27 days instead of 28 because we are inclusive on both sides
 let _daysInWeek = 7
+let _secondsInThreeWeeks: NSTimeInterval = 21 * _secondsInDay
 let _daysInFourWeeks = _daysInWeek * 4
 let _firstDayOfWeek = 1
 let _lastDayOfWeek = _daysInWeek
@@ -76,27 +76,10 @@ class PrayerRequest {
     var saveObject = PFObject(className: "PrayerRequest")
 
     
-    // Is still used by the requestEditor when you add a request.
-    init(requestName: String?, details: String?, frequency: Frequency?) {
-        self.requestName = requestName
-        self.details = details
-        
-        let calendar = NSCalendar.currentCalendar()
-        
-        let startComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
-        startComponents.weekday = _firstDayOfWeek
-        dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
-        
-        let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInFourWeeks))
-        endComponents.weekday = _lastDayOfWeek
-        dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
-        
-        if frequency != nil {
-            self.frequency = frequency!
-        } else {
-            self.frequency = Frequency(choice: nil)
-        }
-        refreshDates()
+    // Only used by the requestEditor when you add a request, called through the main tableviewcontroller
+    init() {
+        self.requestName = nil
+        self.details = nil
     }
     
     init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, saveObject: PFObject) {
@@ -117,7 +100,7 @@ class PrayerRequest {
             startComponents.weekday = _firstDayOfWeek
             self.dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
             
-            let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInFourWeeks))
+            let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
             endComponents.weekday = _lastDayOfWeek
             self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
             
@@ -229,6 +212,7 @@ class PrayerRequest {
             var weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
             dates.append(selectDate(weeksDates))
         }
+        masterList.fillCalendar()
     }
     
     

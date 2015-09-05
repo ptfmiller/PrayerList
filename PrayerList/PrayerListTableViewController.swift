@@ -92,7 +92,7 @@ class PrayerListTableViewController: UITableViewController {
         else if (segue.identifier == "addRequest") {
             let requestEditorViewController = segue.destinationViewController as! RequestEditorViewController
             requestEditorViewController.isNewRequest = true
-            requestEditorViewController.prayerRequest = PrayerRequest(requestName: nil, details: nil, frequency: nil)
+            requestEditorViewController.prayerRequest = PrayerRequest()
         }
         else if (segue.identifier == "settings") {
             let settingsViewController = segue.destinationViewController as!  SettingsViewController
