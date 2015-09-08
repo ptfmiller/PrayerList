@@ -73,6 +73,7 @@ class PrayerRequest {
     var dateFrameEnd: NSDate = NSDate()
     var frequency: Frequency = Frequency(choice: nil)
     var dates: [NSDate] = []
+    var validDays = Dictionary<MasterList.Day, Bool>()
     var saveObject = PFObject(className: "PrayerRequest")
 
     
@@ -80,15 +81,26 @@ class PrayerRequest {
     init() {
         self.requestName = nil
         self.details = nil
+        
+        let calendar = NSCalendar.currentCalendar()
+        
+        let startComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        startComponents.weekday = _firstDayOfWeek
+        self.dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
+        
+        let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
+        endComponents.weekday = _lastDayOfWeek
+        self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
     }
     
-    init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, saveObject: PFObject) {
+    init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, validDays: Dictionary<MasterList.Day, Bool>, saveObject: PFObject) {
         self.requestName = requestName
         self.details = details
         self.dateFrameStart = dateFrameStart
         self.dateFrameEnd = dateFrameEnd
         self.dates = dates
         self.frequency = frequency
+        self.validDays = validDays
         self.saveObject = saveObject
         
         let today = NSDate()
@@ -105,7 +117,6 @@ class PrayerRequest {
             self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
             
             self.refreshDates()
-            self.save()
         }
     }
     
@@ -120,7 +131,19 @@ class PrayerRequest {
         let dateFrameEnd = savedObject["dateFrameEnd"] as! NSDate
         let dates = savedObject["dates"] as! [NSDate]
         let frequency = Frequency(choice: savedObject["frequency"] as! Int?)
-        self.init(requestName: requestName, details: details, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd, dates: dates, frequency: frequency, saveObject: savedObject)
+        var validDaysDictionary = Dictionary<MasterList.Day, Bool>()
+        if let validDaysArray = savedObject["validDays"] as? [Bool] {
+            for i in 1...(validDaysArray.count - 1) {
+                let day = MasterList.Day(value: i)
+                validDaysDictionary[day] = validDaysArray[i]
+            }
+        } else {
+            let masterList = MasterList.sharedInstance
+            let masterDaySelections = masterList.getDaySelections()
+            validDaysDictionary = masterDaySelections
+        }
+        
+        self.init(requestName: requestName, details: details, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd, dates: dates, frequency: frequency, validDays: validDaysDictionary, saveObject: savedObject)
     }
     
     func save() {
@@ -138,6 +161,7 @@ class PrayerRequest {
         saveObject["dateFrameEnd"] = self.dateFrameEnd
         saveObject["dates"] = self.dates
         saveObject["frequency"] = self.frequency.rawValue
+        saveObject["validDays"] = self.convertDictionaryToBoolArray(self.validDays)
         
         // Store the current user for retrieving later
         var user = PFUser.currentUser()
@@ -149,7 +173,25 @@ class PrayerRequest {
         saveObject.deleteInBackground()
     }
     
-    // Need to update this to remove some abberant behavior. If we refresh something with a not daily recurrence, we could have the same item twice this week. Or not at all. Daily recurrences should simply have all dates cleared and added back in. The way to do this is probably moving the dates clearing to within the cases individually
+    func convertBoolArrayToDictionary(boolArray: [Bool]) -> Dictionary<MasterList.Day, Bool> {
+        var newDic = Dictionary<MasterList.Day, Bool>()
+        for i in 1...(boolArray.count - 1) {
+            let day = MasterList.Day(value: i)
+            newDic[day] = boolArray[i]
+        }
+        return newDic
+    }
+    
+    func convertDictionaryToBoolArray(dic: Dictionary<MasterList.Day, Bool>) -> [Bool] {
+        var boolArray = [Bool](count:8, repeatedValue: false)
+        for (day, bool) in dic {
+            boolArray[day.dayNumber()] = bool
+        }
+        return boolArray
+    }
+    
+    // Need to update this to remove some abberant behavior. If we refresh something with a not daily recurrence, we could have the same item twice this week. Or not at all. Daily recurrences should simply have all dates cleared and added back in. The way to do this is probably moving the dates clearing to within the cases individually.
+    // Additionally, need to code this to start actually using the valid day preferences.
     func refreshDates() {
         dates = []
         let masterList = MasterList.sharedInstance
@@ -158,7 +200,9 @@ class PrayerRequest {
         
         // perform weighting based on calendarList's fullness
         for (date, distribution) in possibleDates {
-            if (calendarList[date] != nil) {possibleDates.updateValue(possibleDates[date]! * pow(0.5, Double(calendarList[date]!.count)), forKey: date)}
+            if (calendarList[date] != nil) {
+                possibleDates.updateValue(possibleDates[date]! * pow(0.5, Double(calendarList[date]!.count)), forKey: date)
+            }
         }
         
         switch frequency {
@@ -212,9 +256,9 @@ class PrayerRequest {
             var weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
             dates.append(selectDate(weeksDates))
         }
+        self.save()
         masterList.fillCalendar()
     }
-    
     
     func candidateDates() -> Dictionary<NSDate, Double> {
         var candiDates = Dictionary<NSDate, Double>()
@@ -266,6 +310,36 @@ class PrayerRequest {
         return calendar.dateFromComponents(components)!
     }
     
-
+    func mayUpdateDaySelections(newSelections: Dictionary<MasterList.Day, Bool>) {
+        var updateNeeded: Bool = false
+        let masterList = MasterList.sharedInstance
+        let masterListDays = masterList.getDaySelections()
+        for (day, bool) in newSelections {
+            if masterListDays[day]! {
+                if bool != self.validDays[day] {
+                    updateNeeded = true
+                }
+            }
+        }
+        if updateNeeded {
+            self.updateDaySelections(newSelections)
+            self.refreshDates()
+        }
+    }
+    
+    // Converts the dictionary into the array to be stored in the PFUser, since PFUser dictionaries cannot store Day enums. Then calls
+    func updateDaySelections(selections: Dictionary<MasterList.Day, Bool>) {
+        self.validDays = selections
+        self.updateDaySelections(self.convertDictionaryToBoolArray(selections))
+    }
+    
+    func updateDaySelections(selections: [Bool]) {
+        self.saveObject["validDays"] = selections
+        self.save()
+    }
+    
+    func getValidDays() -> Dictionary<MasterList.Day, Bool> {
+        return self.validDays
+    }
     
 }

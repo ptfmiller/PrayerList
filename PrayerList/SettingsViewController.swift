@@ -9,7 +9,7 @@
 import UIKit
 import Parse
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UITableViewController {
 
     @IBOutlet var switchSunday: UISwitch!
     @IBOutlet var switchMonday: UISwitch!
@@ -29,13 +29,9 @@ class SettingsViewController: UIViewController {
 
     }
 
-    // We will uncomment once this functionality is fully coded
-/*
     override func viewWillAppear(animated: Bool) {
         let masterList = MasterList.sharedInstance
-        let selections = masterList.daySelections
-        let current = selections[MasterList.Day.Monday]!
-        let day = MasterList.Day.Monday
+        let selections = masterList.getDaySelections()
         switchSunday.on = selections[MasterList.Day.Sunday]!
         switchMonday.on = selections[MasterList.Day.Monday]!
         switchTuesday.on = selections[MasterList.Day.Tuesday]!
@@ -43,22 +39,22 @@ class SettingsViewController: UIViewController {
         switchThursday.on = selections[MasterList.Day.Thursday]!
         switchFriday.on = selections[MasterList.Day.Friday]!
         switchSaturday.on = selections[MasterList.Day.Saturday]!
-        let on = switchMonday.on
-        let onS = switchSunday.on
     }
-    
-    // Doesn't successfully set the values in the masterlist yet
+
     override func viewWillDisappear(animated: Bool) {
         let masterList = MasterList.sharedInstance
-        masterList.daySelections[MasterList.Day.Sunday] = switchSunday.on
-        masterList.daySelections[MasterList.Day.Monday] = switchMonday.on
-        masterList.daySelections[MasterList.Day.Tuesday] = switchTuesday.on
-        masterList.daySelections[MasterList.Day.Wednesday] = switchWednesday.on
-        masterList.daySelections[MasterList.Day.Thursday] = switchThursday.on
-        masterList.daySelections[MasterList.Day.Friday] = switchFriday.on
-        masterList.daySelections[MasterList.Day.Saturday] = switchSaturday.on
+        var newSelections = Dictionary<MasterList.Day, Bool>()
+        newSelections[MasterList.Day.Sunday] = switchSunday.on
+        newSelections[MasterList.Day.Monday] = switchMonday.on
+        newSelections[MasterList.Day.Tuesday] = switchTuesday.on
+        newSelections[MasterList.Day.Wednesday] = switchWednesday.on
+        newSelections[MasterList.Day.Thursday] = switchThursday.on
+        newSelections[MasterList.Day.Friday] = switchFriday.on
+        newSelections[MasterList.Day.Saturday] = switchSaturday.on
+        // If an update is needed, this function will perform the update and refresh all prayer requests so they fall on the correct days
+        masterList.mayUpdateDaySelections(newSelections)
     }
-*/
+
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

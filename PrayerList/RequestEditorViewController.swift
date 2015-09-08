@@ -17,20 +17,17 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     @IBOutlet var requestNameTextField: UITextField!
     @IBOutlet var detailsTextView: UITextView!
     @IBOutlet var frequencyPicker: UIPickerView!
-    @IBOutlet var deleteButton: UIButton!
     
-    override func viewWillAppear(animated: Bool) {
-        /*
-        detailsTextView.layer.cornerRadius = 5
-        detailsTextView.layer.borderColor = UIColor.grayColor().CGColor
-        detailsTextView.layer.borderWidth = 1
-        */
-        deleteButton.setBackgroundImage(UIImage(named: "iphone_delete_button.png")?.stretchableImageWithLeftCapWidth(8, topCapHeight: 0), forState: UIControlState.Normal)
-        deleteButton.setTitleColor(UIColor.whiteColor(), forState: UIControlState.Normal)
-        deleteButton.titleLabel?.font = UIFont.boldSystemFontOfSize(20)
-        deleteButton.titleLabel?.shadowColor = UIColor.lightGrayColor()
-        deleteButton.titleLabel?.shadowOffset = CGSizeMake(0, -1)
-    }
+    @IBOutlet var switchSunday: UISwitch!
+    @IBOutlet var switchMonday: UISwitch!
+    @IBOutlet var switchTuesday: UISwitch!
+    @IBOutlet var switchWednesday: UISwitch!
+    @IBOutlet var switchThursday: UISwitch!
+    @IBOutlet var switchFriday: UISwitch!
+    @IBOutlet var switchSaturday: UISwitch!
+    
+    
+    @IBOutlet var deleteButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -49,7 +46,23 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         }
     }
     
-    
+    override func viewWillAppear(animated: Bool) {
+        var switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
+
+        let masterList = MasterList.sharedInstance
+        let masterListSelections = masterList.getDaySelections()
+        let prayerRequestSelections = self.prayerRequest?.getValidDays()
+        for (day, uiSwitch) in switchesDictionary {
+            uiSwitch.enabled = masterListSelections[day]!
+            if uiSwitch.enabled {
+                if let current = prayerRequestSelections?[day] {
+                    uiSwitch.on = current
+                }
+            } else {
+                uiSwitch.on = false
+            }
+        }
+    }
     
     // Pickerview necessities follow
     func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
@@ -64,6 +77,16 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         return PrayerRequest.Frequency.listOfOptions()[row]
     }
     
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+        var pickerLabel = view as? UILabel
+        if pickerLabel == nil {
+            pickerLabel = UILabel()
+            pickerLabel?.font = UIFont(name: "System", size: 10)
+            pickerLabel?.textAlignment = NSTextAlignment.Center
+        }
+        pickerLabel?.text = PrayerRequest.Frequency.listOfOptions()[row]
+        return pickerLabel!
+    }
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
@@ -88,12 +111,21 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
             prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
             prayerRequest?.refreshDates()
         }
+        var switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
+        var newSelections = Dictionary<MasterList.Day, Bool>()
+        for (day, uiSwitch) in switchesDictionary {
+            newSelections[day] = uiSwitch.on
+        }
+        // If an update is needed, this function will perform the update and refresh all prayer requests so they fall on the correct days
+        prayerRequest?.mayUpdateDaySelections(newSelections)
+
+        
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance
         if self.isNewRequest {
             masterList.addPrayerRequest(self.prayerRequest!)
         }
-        // So this is not updating the calendar to retrieve the object once you save it, so the calendar remains without the item. Need to fix.
+        // This is here so the list will update based on the new information
         masterList.fillCalendar()
         self.dismissSelf()
     }

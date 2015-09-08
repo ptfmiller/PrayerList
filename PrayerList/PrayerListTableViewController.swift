@@ -29,7 +29,6 @@ class PrayerListTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.loginToPrayerList()
         masterList.fillCalendar()
-        //PFUser.logOut()
         self.tableView.reloadData()
     }
     
@@ -40,8 +39,7 @@ class PrayerListTableViewController: UITableViewController {
         }
         
         // Check whether you are already logged in
-        var currentUser = PFUser.currentUser()
-        if (currentUser != nil) {
+        if let currentUser = PFUser.currentUser() {
             // Record that the user is already logged in
             self.isLoggedIn = true
         }

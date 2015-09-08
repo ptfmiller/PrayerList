@@ -40,8 +40,25 @@ class MasterList {
             }
         }
         
+        init(value: Int) {
+            switch value {
+            case 1: self = .Sunday
+            case 2: self = .Monday
+            case 3: self = .Tuesday
+            case 4: self = .Wednesday
+            case 5: self = .Thursday
+            case 6: self = .Friday
+            case 7: self = .Saturday
+            default: self = .Sunday
+            }
+        }
+        
         func equals(day: Day) -> Bool {
             return self.rawValue == day.rawValue
+        }
+        
+        func dayNumber() -> Int {
+            return self.rawValue
         }
     }
     
@@ -79,141 +96,70 @@ class MasterList {
         self.fillCalendar()
     }
     
-    // This function is currently not very safe. I.e. if you try to call it while PFUser is not logged in you will accomplish nothing, and it will not let you know. 
     func startUp() {
-        // For inputing data
-        /*
-        var inputs = [["Jamie", "Daily"]]
-        inputs.append(["June", "Daily"])
-        inputs.append(["Community Group", "Weekly"])
-        inputs.append(["Sang", "Weekly"])
-        inputs.append(["Aron Dalley", "Weekly"])
-        inputs.append(["Kevin McDermott", "Weekly"])
-        inputs.append(["Matt Becker", "Weekly"])
-        inputs.append(["Jason Plamp", "Weekly"])
-        inputs.append(["Julian Cha", "Weekly"])
-        inputs.append(["James Ortego", "Weekly"])
-        inputs.append(["Dad", "Weekly"])
-        inputs.append(["Mom", "Weekly"])
-        inputs.append(["Heather", "Weekly"])
-        inputs.append(["Andrew", "Weekly"])
-        inputs.append(["Cannon", "Weekly"])
-        inputs.append(["Melissa and Andy", "Weekly"])
-        inputs.append(["Paul Kherer", "Weekly"])
-        inputs.append(["Remnant", "Weekly"])
-        inputs.append(["Richmond", "Weekly"])
-        inputs.append(["Will Squiers", "Weekly"])
-        inputs.append(["PFA", "Weekly"])
-        inputs.append(["Westminster Intervarsity", "Weekly"])
-        inputs.append(["Pawkuele", "Weekly"])
-        inputs.append(["Max Gruenther", "Weekly"])
-        inputs.append(["Revival", "Weekly"])
-        inputs.append(["Persecuted Christians", "Weekly"])
-        inputs.append(["Jerrard Smith", "Weekly"])
-        inputs.append(["Malcom Norris", "Biweekly"])
-        inputs.append(["Sean Pyle", "Biweekly"])
-        inputs.append(["Bryan Laughlin", "Biweekly"])
-        inputs.append(["Josh Soto", "Biweekly"])
-        inputs.append(["Doug Ponder", "Biweekly"])
-        inputs.append(["Jason Elliot", "Biweekly"])
-        inputs.append(["Darrel Bowe", "Biweekly"])
-        inputs.append(["Christian Union", "Biweekly"])
-        inputs.append(["Government", "Biweekly"])
-        inputs.append(["Chad and Jessica", "Biweekly"])
-        inputs.append(["Brenda", "Biweekly"])
-        inputs.append(["Bob and Paulette", "Biweekly"])
-        inputs.append(["Matt Superdock", "Biweekly"])
-        inputs.append(["Graheks", "Biweekly"])
-        inputs.append(["Sarah Dorrance", "Biweekly"])
-        inputs.append(["Warren Lewis", "Biweekly"])
-        inputs.append(["Grace Robinson", "Biweekly"])
-        inputs.append(["Jenika", "Biweekly"])
-        inputs.append(["Leanne", "Biweekly"])
-        inputs.append(["Erika", "Biweekly"])
-        inputs.append(["Shanna", "Biweekly"])
-        inputs.append(["Yogi", "Biweekly"])
-        inputs.append(["Youssef", "Biweekly"])
-        inputs.append(["Paul Eiker", "Biweekly"])
-        inputs.append(["David Babylon", "Biweekly"])
-        inputs.append(["Frank Babylon", "Biweekly"])
-        inputs.append(["Louis Paumier", "Biweekly"])
-        inputs.append(["Nick Uebel ministry at VCU", "Biweekly"])
-        inputs.append(["Ryan Modi", "Biweekly"])
-        inputs.append(["Dan Casanova", "Fourweekly"])
-        inputs.append(["Danny Weiss", "Fourweekly"])
-        inputs.append(["Dave Kurz", "Fourweekly"])
-        inputs.append(["Trent Fuenmayor", "Fourweekly"])
-        inputs.append(["Jim Hao", "Fourweekly"])
-        inputs.append(["John Naberhaus", "Fourweekly"])
-        inputs.append(["Peter Breen", "Fourweekly"])
-        inputs.append(["Bree Hierholzer", "Fourweekly"])
-        inputs.append(["Jack Squiers", "Fourweekly"])
-        inputs.append(["Matt Becker", "Fourweekly"])
-        inputs.append(["Redeemer Church in Leeds", "Fourweekly"])
-        inputs.append(["Village Church in Belfast", "Fourweekly"])
-        inputs.append(["Jesus Rodriguez in Mexico City", "Fourweekly"])
-        inputs.append(["Billy and Holly", "Fourweekly"])
-        inputs.append(["Nate & Kat Snead", "Fourweekly"])
-        inputs.append(["Catherine Ham", "Fourweekly"])
-        inputs.append(["Matt and Sandra", "Fourweekly"])
-        inputs.append(["Xida Zheng", "Fourweekly"])
-        inputs.append(["Judson Kempton", "Fourweekly"])
-        inputs.append(["Corey Lightner", "Fourweekly"])
-        inputs.append(["Lenny Levin", "Fourweekly"])
-        inputs.append(["Greg Palmer", "Fourweekly"])
-        inputs.append(["Ryan Schneider", "Fourweekly"])
-        inputs.append(["Rich Fairbank", "Fourweekly"])
-        inputs.append(["Scott Jones", "Fourweekly"])
-        inputs.append(["Luke Bonner", "Fourweekly"])
-        inputs.append(["Joe Duerksen", "Fourweekly"])
-        inputs.append(["Daniel Graves", "Fourweekly"])
-        inputs.append(["Ryan Compton", "Fourweekly"])
-        inputs.append(["Christian Briggs", "Fourweekly"])
-        inputs.append(["Rachel Robbins", "Fourweekly"])
-
-        for item in inputs {
-            let newRequest = PrayerRequest(requestName: item[0], details: nil, frequency: PrayerRequest.Frequency(choice: item[1]))
-            newRequest.save()
-            requestsList.append(newRequest)
-        }
-        */
-        
-        /*
-        var user = PFUser()
-        user.username = "ptfmiller@gmail.com"
-        user.password = "S1mplexity"
-        user.email = "ptfmiller@gmail.com"
-        
-        user.signUpInBackgroundWithBlock {
-        (succeeded: Bool, error: NSError?) -> Void in
-        if let error = error {
-        let errorString = error.userInfo?["error"] as? NSString
-        // Show the errorString somewhere and let the user try again.
-        print(errorString)
-        } else {
-        // Hooray! Let them use the app now.
-        }
-        }
-        */
-        
-        
-        var currentUser = PFUser.currentUser()
-        if currentUser != nil {
-            // Do stuff with the user
-            // Will need to update this when we move to several users model
+        if let currentUser = PFUser.currentUser() {
             var query = PFQuery(className: "PrayerRequest")
-            query.whereKey("user", equalTo: currentUser!)
+            query.whereKey("user", equalTo: currentUser)
             if let requests = query.findObjects() {
                 for item in requests {
                     let restoredRequest = PrayerRequest(savedObject: item as! PFObject)
                     self.addPrayerRequest(restoredRequest)
                 }
             }
+            self.fetchDaySelections()
         }
-        
         self.fillCalendar()
+    }
     
-        //PFUser.logOut()
+    func fetchDaySelections() {
+        if let currentUser = PFUser.currentUser() {
+            if let selections = currentUser["daySelections"] as? [Bool] {
+                var masterSelections = Dictionary<Day, Bool>()
+                for i in 1...(selections.count - 1) {
+                    let day = Day(rawValue: i)
+                    masterSelections[day!] = selections[i]
+                }
+                self.daySelections = masterSelections
+            } else {
+                self.updateDaySelections(self.daySelections)
+            }
+        }
+    }
+    
+    func getDaySelections() -> Dictionary<Day, Bool> {
+        return self.daySelections
+    }
+    
+    func mayUpdateDaySelections(newSelections: Dictionary<Day, Bool>) {
+        var updateNeeded: Bool = false
+        for (day, bool) in newSelections {
+            if bool != self.daySelections[day] {
+                updateNeeded = true
+            }
+        }
+        if updateNeeded {
+            self.updateDaySelections(newSelections)
+            self.refreshAllRequests()
+        }        
+    }
+    
+    // Converts the dictionary into the array to be stored in the PFUser, since PFUser dictionaries cannot store Day enums. Then calls
+    func updateDaySelections(selections: Dictionary<Day, Bool>) {
+        var boolArray = [Bool](count:8, repeatedValue: false)
+        for (day, bool) in selections {
+                boolArray[day.dayNumber()] = bool
+        }
+        self.updateDaySelections(boolArray)
+    }
+    
+    func updateDaySelections(selections: [Bool]) {
+        if let currentUser = PFUser.currentUser() {
+            currentUser["daySelections"] = selections
+            currentUser.saveInBackground()
+        } else {
+            // There was a problem. There should necessarily be a PFUser.
+        }
+        self.fetchDaySelections()
     }
     
     func addPrayerRequest(prayerRequest: PrayerRequest) {

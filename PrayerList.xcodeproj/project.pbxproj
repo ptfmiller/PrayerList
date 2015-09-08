@@ -124,6 +124,9 @@
 		142BE5EA1B23C8790059B1B2 = {
 			isa = PBXGroup;
 			children = (
+				142BE5F51B23C8790059B1B2 /* PrayerList */,
+				142BE60B1B23C8790059B1B2 /* PrayerListTests */,
+				142BE5F41B23C8790059B1B2 /* Products */,
 				142BE6721B2D2F3E0059B1B2 /* libsqlite3.dylib */,
 				142BE6701B2D2F330059B1B2 /* libz.dylib */,
 				142BE66E1B2D2F280059B1B2 /* SystemConfiguration.framework */,
@@ -135,9 +138,6 @@
 				142BE6621B2D2EF20059B1B2 /* CoreGraphics.framework */,
 				142BE6601B2D2EE50059B1B2 /* CFNetwork.framework */,
 				142BE65E1B2D2EDD0059B1B2 /* AudioToolbox.framework */,
-				142BE5F51B23C8790059B1B2 /* PrayerList */,
-				142BE60B1B23C8790059B1B2 /* PrayerListTests */,
-				142BE5F41B23C8790059B1B2 /* Products */,
 				142BE6581B2D2E8D0059B1B2 /* Bolts.framework */,
 				142BE6591B2D2E8D0059B1B2 /* Parse.framework */,
 			);
@@ -448,6 +448,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PrayerList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
@@ -465,6 +466,7 @@
 					"$(PROJECT_DIR)",
 				);
 				INFOPLIST_FILE = PrayerList/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 8.0;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
