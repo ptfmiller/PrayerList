@@ -13,6 +13,7 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     
     var prayerRequest: PrayerRequest?
     var isNewRequest: Bool = false
+    let prayedForTableViewDelegate = PrayedForTableViewDelegate()
     
     @IBOutlet var requestNameTextField: UITextField!
     @IBOutlet var detailsTextView: UITextView!
@@ -26,6 +27,9 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     @IBOutlet var switchFriday: UISwitch!
     @IBOutlet var switchSaturday: UISwitch!
     
+    @IBOutlet var prayedForTableViewHeightConstraint: NSLayoutConstraint!
+    @IBOutlet var prayedForContainerView: UIView!
+    @IBOutlet var prayedForTableView: UITableView!
     
     @IBOutlet var deleteButton: UIButton!
     
@@ -33,6 +37,9 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         super.viewDidLoad()
         
         // Do any additional setup after loading the view.
+        self.prayedForTableViewDelegate.setPrayerRequest(self.prayerRequest)
+        self.prayedForTableView.delegate = self.prayedForTableViewDelegate
+        self.prayedForTableView.dataSource = self.prayedForTableViewDelegate
         self.frequencyPicker.dataSource = self
         self.frequencyPicker.delegate = self
         if (prayerRequest != nil) {
@@ -62,6 +69,26 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
                 uiSwitch.on = false
             }
         }
+        self.prayedForContainerView.sizeToFit()
+        self.prayedForTableView.sizeToFit()
+        var height = self.prayedForTableView.contentSize.height;
+        let maxHeight = self.prayedForTableView.superview!.frame.size.height - self.prayedForTableView.frame.origin.y;
+        
+        
+        // if the height of the content is greater than the maxHeight of
+        // total space on the screen, limit the height to the size of the
+        // superview.
+        
+        if (height > maxHeight) {
+        height = maxHeight;
+        }
+        
+        // now set the height constraint accordingly
+        
+        
+        self.prayedForTableViewHeightConstraint.constant = height;
+        self.view.setNeedsUpdateConstraints()
+        
     }
     
     // Pickerview necessities follow
@@ -88,9 +115,13 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         return pickerLabel!
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    override func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat {
+        if (indexPath.section == 4 && indexPath.row == 0) {
+            return CGFloat(prayedForTableViewDelegate.heightOfTable())
+        }
+        else {
+            return super.tableView(tableView, heightForRowAtIndexPath: indexPath)
+        }
     }
     
     func receivePrayerRequest(prayerRequest: PrayerRequest) {
@@ -107,10 +138,6 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         prayerRequest?.requestName = requestNameTextField.text
         prayerRequest?.details = detailsTextView.text
         let frequencySelection = frequencyPicker.selectedRowInComponent(0)
-        if prayerRequest?.frequency != PrayerRequest.Frequency(choice: frequencySelection + 1) {
-            prayerRequest?.frequency = PrayerRequest.Frequency(choice: frequencySelection + 1)
-            prayerRequest?.refreshDates()
-        }
         var switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
         var newSelections = Dictionary<MasterList.Day, Bool>()
         for (day, uiSwitch) in switchesDictionary {
@@ -118,7 +145,8 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         }
         // If an update is needed, this function will perform the update and refresh all prayer requests so they fall on the correct days
         prayerRequest?.mayUpdateDaySelections(newSelections)
-
+        prayerRequest?.mayUpdateFrequency(frequencySelection)
+        
         
         prayerRequest?.save()
         let masterList = MasterList.sharedInstance

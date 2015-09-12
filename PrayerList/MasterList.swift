@@ -19,6 +19,7 @@ class MasterList {
     var requestsList: [PrayerRequest] = []
     var daySelections = [Day.Sunday: false, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: false]
     var calendarList = Dictionary<NSDate, [PrayerRequest]>()
+    var todaysList = [Int, PrayerRequest]()
     
     
     enum Day: Int {
@@ -115,7 +116,7 @@ class MasterList {
         if let currentUser = PFUser.currentUser() {
             if let selections = currentUser["daySelections"] as? [Bool] {
                 var masterSelections = Dictionary<Day, Bool>()
-                for i in 1...(selections.count - 1) {
+                for i in 1..<selections.count {
                     let day = Day(rawValue: i)
                     masterSelections[day!] = selections[i]
                 }
@@ -192,8 +193,20 @@ class MasterList {
         return bool
     }
     
-    func getTodaysList() -> [PrayerRequest] {
-        return calendarList[flattenDate(NSDate())]!
+    func getTodaysList() -> [[PrayerRequest]] {
+        var todaysList = [calendarList[flattenDate(NSDate())]!,[]]
+        var i = 0
+        while i < todaysList[0].count {
+            // if the if condition is never met, then the date is in the past and should not be reset
+            if todaysList[0][i].doneToday() {
+                // The date is still to come, and we need to replace it
+                todaysList[1].append(todaysList[0][i])
+                todaysList[0].removeAtIndex(i)
+                i -= 1
+            }
+            i += 1
+        }
+        return todaysList
     }
     
     func refreshAllRequests() {

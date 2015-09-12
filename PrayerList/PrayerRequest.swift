@@ -73,6 +73,7 @@ class PrayerRequest {
     var dateFrameEnd: NSDate = NSDate()
     var frequency: Frequency = Frequency(choice: nil)
     var dates: [NSDate] = []
+    var prayerRecord: [NSDate] = []
     var validDays = Dictionary<MasterList.Day, Bool>()
     var saveObject = PFObject(className: "PrayerRequest")
 
@@ -93,13 +94,14 @@ class PrayerRequest {
         self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
     }
     
-    init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, validDays: Dictionary<MasterList.Day, Bool>, saveObject: PFObject) {
+    init(requestName: String, details: String?, dateFrameStart: NSDate, dateFrameEnd: NSDate, dates: [NSDate], frequency: Frequency, validDays: Dictionary<MasterList.Day, Bool>, prayerRecord: [NSDate], saveObject: PFObject) {
         self.requestName = requestName
         self.details = details
         self.dateFrameStart = dateFrameStart
         self.dateFrameEnd = dateFrameEnd
         self.dates = dates
         self.frequency = frequency
+        self.prayerRecord = prayerRecord
         self.validDays = validDays
         self.saveObject = saveObject
         
@@ -142,8 +144,12 @@ class PrayerRequest {
             let masterDaySelections = masterList.getDaySelections()
             validDaysDictionary = masterDaySelections
         }
+        var prayerRecord: [NSDate] = []
+        if let retrievedPrayerRecord = savedObject["prayerRecord"] as? [NSDate] {
+            prayerRecord = retrievedPrayerRecord
+        }
         
-        self.init(requestName: requestName, details: details, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd, dates: dates, frequency: frequency, validDays: validDaysDictionary, saveObject: savedObject)
+        self.init(requestName: requestName, details: details, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd, dates: dates, frequency: frequency, validDays: validDaysDictionary, prayerRecord: prayerRecord, saveObject: savedObject)
     }
     
     func save() {
@@ -161,6 +167,7 @@ class PrayerRequest {
         saveObject["dateFrameEnd"] = self.dateFrameEnd
         saveObject["dates"] = self.dates
         saveObject["frequency"] = self.frequency.rawValue
+        saveObject["prayerRecord"] = self.prayerRecord
         saveObject["validDays"] = self.convertDictionaryToBoolArray(self.validDays)
         
         // Store the current user for retrieving later
@@ -190,13 +197,20 @@ class PrayerRequest {
         return boolArray
     }
     
+    func mayUpdateFrequency(frequencySelection: Int) {
+        if self.frequency != Frequency(choice: frequencySelection + 1) {
+            self.frequency = Frequency(choice: frequencySelection + 1)
+            self.dates = []
+            self.refreshDates()
+        }
+    }
+    
     // Need to update this to remove some abberant behavior. If we refresh something with a not daily recurrence, we could have the same item twice this week. Or not at all. Daily recurrences should simply have all dates cleared and added back in. The way to do this is probably moving the dates clearing to within the cases individually.
     // Additionally, need to code this to start actually using the valid day preferences.
     func refreshDates() {
-        dates = []
         let masterList = MasterList.sharedInstance
         let calendarList = masterList.calendarList
-        var possibleDates = candidateDates()
+        var possibleDates = createCandidateDates()
         
         // perform weighting based on calendarList's fullness
         for (date, distribution) in possibleDates {
@@ -206,72 +220,111 @@ class PrayerRequest {
         }
         
         switch frequency {
-        case .daily:
-            for (date, distribution) in possibleDates {
-                if (distribution > 0) {
-                    dates.append(date)
-                }
-            }
-        case .weekly:
-            // First week
-            var frameStart = dateFrameStart
-            var frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek - 1), sinceDate: dateFrameStart))
-            var weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-            // Second week
-            frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek), sinceDate: dateFrameStart))
-            frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2 - 1), sinceDate: dateFrameStart))
-            weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-            // Third week
-            frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2), sinceDate: dateFrameStart))
-            frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 3 - 1), sinceDate: dateFrameStart))
-            weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-            // Fourth week
-            frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 3), sinceDate: dateFrameStart))
-            frameEnd = dateFrameEnd
-            weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-        case .biweekly:
-            // First fortnight
-            var frameStart = dateFrameStart
-            var frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2 - 1), sinceDate: dateFrameStart))
-            var weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-            // Second fortnight
-            frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2), sinceDate: dateFrameStart))
-            frameEnd = dateFrameEnd
-            weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
-            
-        case .fourweekly:
-            var frameStart = dateFrameStart
-            var frameEnd = dateFrameEnd
-            var weeksDates = datesInFrame(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
-            dates.append(selectDate(weeksDates))
+        case .daily: self.fillDailyPrayerRequest(possibleDates)
+        case .weekly: self.fillWeeklyPrayerRequest(possibleDates, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd)
+        case .biweekly: self.fillBiweeklyPrayerRequest(possibleDates, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd)
+        case .fourweekly: self.fillFourweeklyPrayerRequest(possibleDates, dateFrameStart: dateFrameStart, dateFrameEnd: dateFrameEnd)
         }
+        
         self.save()
         masterList.fillCalendar()
     }
     
-    func candidateDates() -> Dictionary<NSDate, Double> {
+    func fillDailyPrayerRequest(possibleDates: Dictionary<NSDate, Double>) {
+        self.dates = []
+        for (date, distribution) in possibleDates {
+            if (distribution > 0) {
+                dates.append(date)
+            }
+        }
+    }
+    
+    func fillWeeklyPrayerRequest(possibleDates: Dictionary<NSDate, Double>, dateFrameStart: NSDate, dateFrameEnd: NSDate) {
+        // First week
+        var frameStart = dateFrameStart
+        var frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek - 1), sinceDate: dateFrameStart))
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+        
+        // Second week
+        frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek), sinceDate: dateFrameStart))
+        frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2 - 1), sinceDate: dateFrameStart))
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+        
+        // Third week
+        frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2), sinceDate: dateFrameStart))
+        frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 3 - 1), sinceDate: dateFrameStart))
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+        
+        // Fourth week
+        frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 3), sinceDate: dateFrameStart))
+        frameEnd = dateFrameEnd
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+
+    }
+    
+    func fillBiweeklyPrayerRequest(possibleDates: Dictionary<NSDate, Double>, dateFrameStart: NSDate, dateFrameEnd: NSDate) {
+        // First fortnight
+        var frameStart = dateFrameStart
+        var frameEnd = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2 - 1), sinceDate: dateFrameStart))
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+        
+        // Second fortnight
+        frameStart = flattenDate(NSDate(timeInterval: _secondsInDay * Double(_daysInWeek * 2), sinceDate: dateFrameStart))
+        frameEnd = dateFrameEnd
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+    }
+    
+    func fillFourweeklyPrayerRequest(possibleDates: Dictionary<NSDate, Double>, dateFrameStart: NSDate, dateFrameEnd: NSDate) {
+        var frameStart = dateFrameStart
+        var frameEnd = dateFrameEnd
+        self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
+    }
+    
+    func createCandidateDates() -> Dictionary<NSDate, Double> {
         var candiDates = Dictionary<NSDate, Double>()
         let masterList = MasterList.sharedInstance
         for day in 0..<_daysInFourWeeks {
             var newDate = flattenDate(NSDate(timeInterval: _secondsInDay * Double(day), sinceDate: dateFrameStart))
-            if (masterList.validDate(newDate)) {
+            if (masterList.validDate(newDate) && self.validDate(newDate)) {
                 candiDates[newDate] = 1
             } else {
                 candiDates[newDate] = 0
             }
         }
         return candiDates
+    }
+    
+    func validDate(date: NSDate) -> Bool {
+        let day = MasterList.Day(date: date)
+        return self.validDays[day]!
+    }
+    
+    func mayAddRandomDate(possibleDates: Dictionary<NSDate, Double>, frameStart: NSDate, frameEnd: NSDate) {
+        // Find whether there is a date in the frame that has already passed or is today. In this case, leave it alone
+        var i = 0
+        var needToReplace = false
+        while i < self.dates.count {
+            // if the if condition is never met, then the date is in the past and should not be reset
+            if (self.dates[i].compare(flattenDate(NSDate())) == .OrderedDescending && self.dates[i].compare(frameEnd) == .OrderedAscending) {
+                // The date is still to come, and we need to replace it
+                self.dates.removeAtIndex(i)
+                needToReplace = true
+                i -= 1
+            }
+            i += 1
+        }
+        if needToReplace {
+            // Use the updated frame start, which is the later of today or the frame start passed into the function
+            var updatedFrameStart = self.flattenDate(NSDate())
+            if frameStart.compare(updatedFrameStart) == .OrderedDescending {
+                updatedFrameStart = frameStart
+            }
+            // create the new set of dates that we may populate
+            var updatedPossibleDates = self.datesInFrame(possibleDates, frameStart: updatedFrameStart, frameEnd: frameEnd)
+            var newSelectedDate = self.selectDate(updatedPossibleDates)
+            // Add the new randomly selected date
+            self.dates.append(newSelectedDate)
+        }
     }
     
     func datesInFrame(possibleDates: Dictionary<NSDate, Double>, frameStart: NSDate, frameEnd: NSDate) -> Dictionary<NSDate, Double> {
@@ -336,6 +389,42 @@ class PrayerRequest {
     func updateDaySelections(selections: [Bool]) {
         self.saveObject["validDays"] = selections
         self.save()
+    }
+        
+    func recordPrayed(date: NSDate) {
+        var alreadyIn = false
+        let flattenedDate = flattenDate(date)
+        for item in self.prayerRecord {
+            if flattenedDate.compare(item) == .OrderedSame {
+                alreadyIn = true
+            }
+        }
+        if !alreadyIn {
+            self.prayerRecord.append(flattenDate(date))
+        }
+        self.save()
+    }
+    
+    func removePrayed(date: NSDate) {
+        let flattenedDate = flattenDate(date)
+        for i in 0..<self.prayerRecord.count {
+            let result = flattenedDate.compare(self.prayerRecord[i])
+            if flattenedDate.compare(self.prayerRecord[i]) == .OrderedSame {
+                self.prayerRecord.removeAtIndex(i)
+            }
+        }
+        self.save()
+    }
+    
+    func doneToday() -> Bool {
+        var isDone = false
+        var today = flattenDate(NSDate())
+        for date in self.prayerRecord {
+            if date.compare(today) == .OrderedSame {
+                isDone = true
+            }
+        }
+        return isDone
     }
     
     func getValidDays() -> Dictionary<MasterList.Day, Bool> {

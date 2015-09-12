@@ -37,6 +37,7 @@
 		14C76DA11B5ACAC900809F4C /* UpdateAccountViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C76DA01B5ACAC900809F4C /* UpdateAccountViewController.swift */; };
 		14C76DA31B5ACC4A00809F4C /* MasterListTableViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C76DA21B5ACC4A00809F4C /* MasterListTableViewController.swift */; };
 		14C76DA51B5C282B00809F4C /* ResetPasswordViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14C76DA41B5C282B00809F4C /* ResetPasswordViewController.swift */; };
+		14E8F2911BA239330088D683 /* PrayedForTableViewDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14E8F2901BA239330088D683 /* PrayedForTableViewDelegate.swift */; };
 		14EC37AB1B535D2200CFEF51 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14EC37AA1B535D2200CFEF51 /* LoginViewController.swift */; };
 		14F4F7121B59E4DD004AC4B2 /* SettingsViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 14F4F7111B59E4DD004AC4B2 /* SettingsViewController.swift */; };
 /* End PBXBuildFile section */
@@ -84,6 +85,7 @@
 		14C76DA01B5ACAC900809F4C /* UpdateAccountViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UpdateAccountViewController.swift; sourceTree = "<group>"; };
 		14C76DA21B5ACC4A00809F4C /* MasterListTableViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MasterListTableViewController.swift; sourceTree = "<group>"; };
 		14C76DA41B5C282B00809F4C /* ResetPasswordViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ResetPasswordViewController.swift; sourceTree = "<group>"; };
+		14E8F2901BA239330088D683 /* PrayedForTableViewDelegate.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PrayedForTableViewDelegate.swift; sourceTree = "<group>"; };
 		14EC37AA1B535D2200CFEF51 /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		14F4F7111B59E4DD004AC4B2 /* SettingsViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SettingsViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -160,6 +162,7 @@
 				142BE6191B262DDD0059B1B2 /* RequestTableViewCell.swift */,
 				142BE6221B262E370059B1B2 /* PrayerListTableViewController.swift */,
 				142BE6231B262E370059B1B2 /* RequestEditorViewController.swift */,
+				14E8F2901BA239330088D683 /* PrayedForTableViewDelegate.swift */,
 				142BE61A1B262DDD0059B1B2 /* MasterList.swift */,
 				142BE61C1B262DDD0059B1B2 /* PrayerRequest.swift */,
 				142BE5FC1B23C8790059B1B2 /* Main.storyboard */,
@@ -308,6 +311,7 @@
 				142BE6211B262DDD0059B1B2 /* PrayerRequest.swift in Sources */,
 				14C76DA11B5ACAC900809F4C /* UpdateAccountViewController.swift in Sources */,
 				14F4F7121B59E4DD004AC4B2 /* SettingsViewController.swift in Sources */,
+				14E8F2911BA239330088D683 /* PrayedForTableViewDelegate.swift in Sources */,
 				1481FEA41B58A310002139DB /* SignUpViewController.swift in Sources */,
 				142BE6241B262E370059B1B2 /* PrayerListTableViewController.swift in Sources */,
 				142BE61E1B262DDD0059B1B2 /* RequestTableViewCell.swift in Sources */,

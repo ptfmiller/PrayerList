@@ -15,11 +15,11 @@ class RequestTableViewCell: UITableViewCell {
         case today, master
     }
     
-    func configureCell(indexpath: NSIndexPath, listType: ListType) {
+    func configureCell(indexPath: NSIndexPath, listType: ListType) {
         let masterList = MasterList.sharedInstance
         switch listType {
-        case .today: self.textLabel!.text = masterList.getTodaysList()[indexpath.row].requestName
-        case .master: self.textLabel!.text = masterList.requestsList[indexpath.row].requestName
+        case .today: self.textLabel!.text = masterList.getTodaysList()[indexPath.section][indexPath.row].requestName
+        case .master: self.textLabel!.text = masterList.requestsList[indexPath.row].requestName
         }
     }
 }
