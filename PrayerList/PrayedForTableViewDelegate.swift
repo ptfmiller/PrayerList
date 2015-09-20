@@ -26,7 +26,7 @@ class PrayedForTableViewDelegate: NSObject, UITableViewDelegate, UITableViewData
     }
     
      func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCellWithIdentifier("prayedForCell", forIndexPath: indexPath) as! UITableViewCell
+        let cell = tableView.dequeueReusableCellWithIdentifier("prayedForCell", forIndexPath: indexPath) 
         let date = prayerRequest?.prayerRecord[indexPath.row]
         let dateFormatter = NSDateFormatter()
         dateFormatter.dateStyle = .ShortStyle
@@ -35,7 +35,7 @@ class PrayedForTableViewDelegate: NSObject, UITableViewDelegate, UITableViewData
     }
     
     func heightOfTable() -> Int {
-        return prayerRequest!.prayerRecord.count * 28
+        return prayerRequest!.prayerRecord.count * 44
     }
     
 }

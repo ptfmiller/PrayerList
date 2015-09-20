@@ -10,7 +10,6 @@ import Foundation
 import CoreData
 import Parse
 
-
 private let _MasterList = MasterList()
 
 
@@ -19,7 +18,7 @@ class MasterList {
     var requestsList: [PrayerRequest] = []
     var daySelections = [Day.Sunday: false, Day.Monday: true, Day.Tuesday: true, Day.Wednesday: true, Day.Thursday: true, Day.Friday: true, Day.Saturday: false]
     var calendarList = Dictionary<NSDate, [PrayerRequest]>()
-    var todaysList = [Int, PrayerRequest]()
+    var todaysList = []
     
     
     enum Day: Int {
@@ -27,8 +26,7 @@ class MasterList {
         
         init(date: NSDate) {
             let calendar = NSCalendar.currentCalendar()
-            let components = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: date)
-            let weekday = components.weekday
+            let components = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: date)
             switch components.weekday {
             case 1: self = .Sunday
             case 2: self = .Monday
@@ -99,7 +97,7 @@ class MasterList {
     
     func startUp() {
         if let currentUser = PFUser.currentUser() {
-            var query = PFQuery(className: "PrayerRequest")
+            let query = PFQuery(className: "PrayerRequest")
             query.whereKey("user", equalTo: currentUser)
             if let requests = query.findObjects() {
                 for item in requests {
@@ -183,7 +181,7 @@ class MasterList {
     
     func flattenDate(date: NSDate) -> NSDate {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        let components = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: date)
         return calendar.dateFromComponents(components)!
     }
     
@@ -194,19 +192,23 @@ class MasterList {
     }
     
     func getTodaysList() -> [[PrayerRequest]] {
-        var todaysList = [calendarList[flattenDate(NSDate())]!,[]]
-        var i = 0
-        while i < todaysList[0].count {
-            // if the if condition is never met, then the date is in the past and should not be reset
-            if todaysList[0][i].doneToday() {
-                // The date is still to come, and we need to replace it
-                todaysList[1].append(todaysList[0][i])
-                todaysList[0].removeAtIndex(i)
-                i -= 1
+        if let today = self.calendarList[flattenDate(NSDate())] {
+            var todaysList = [today,[]]
+            var i = 0
+            while i < todaysList[0].count {
+                // if the if condition is never met, then the date is in the past and should not be reset
+                if todaysList[0][i].doneToday() {
+                    // The date is still to come, and we need to replace it
+                    todaysList[1].append(todaysList[0][i])
+                    todaysList[0].removeAtIndex(i)
+                    i -= 1
+                }
+                i += 1
             }
-            i += 1
+            return todaysList
+        } else {
+            return [[],[]]
         }
-        return todaysList
     }
     
     func refreshAllRequests() {

@@ -53,7 +53,7 @@ class LoginViewController: UIViewController {
             alert.show()
         } else {
         
-            PFUser.logInWithUsernameInBackground(self.emailTextField.text, password:self.passwordTextField.text) {
+            PFUser.logInWithUsernameInBackground(self.emailTextField.text!, password:self.passwordTextField.text!) {
                 (user: PFUser?, error: NSError?) -> Void in
                 if user != nil {
                     // Do stuff after successful login.
@@ -63,7 +63,7 @@ class LoginViewController: UIViewController {
                 } else {
                     // The login failed. Check error to see why.
                     let alert = UIAlertView()
-                    let errorString = error?.userInfo?["error"] as? String
+                    let errorString = error?.userInfo["error"] as? String
                     alert.title = "Login error!"
                     alert.message = errorString
                     alert.addButtonWithTitle("OK")

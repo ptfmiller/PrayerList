@@ -28,9 +28,9 @@ class ResetPasswordViewController: UIViewController {
     
     @IBAction func resetPasswordWasPressed(sender: AnyObject) {
         if emailTextField.hasText() {
-            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text, block: { (success: Bool, error: NSError?) -> Void in
+            PFUser.requestPasswordResetForEmailInBackground(emailTextField.text!, block: { (success: Bool, error: NSError?) -> Void in
                 if let error = error {
-                    let errorString = error.userInfo?["error"] as? String
+                    let errorString = error.userInfo["error"] as? String
                     let alertView = UIAlertView()
                     alertView.title = "Error"
                     alertView.message = errorString

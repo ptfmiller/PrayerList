@@ -48,7 +48,9 @@ class PrayerListTableViewController: UITableViewController {
         super.viewWillAppear(animated)
         self.loginToPrayerList()
         masterList.fillCalendar()
-        self.tableView.reloadData()
+        if self.isLoggedIn {
+            self.tableView.reloadData()
+        }
     }
     
     func loginToPrayerList() {
@@ -58,7 +60,7 @@ class PrayerListTableViewController: UITableViewController {
         }
         
         // Check whether you are already logged in
-        if let currentUser = PFUser.currentUser() {
+        if let _ = PFUser.currentUser() {
             // Record that the user is already logged in
             self.isLoggedIn = true
         }
@@ -70,18 +72,20 @@ class PrayerListTableViewController: UITableViewController {
     
     func singleTap(tap: UITapGestureRecognizer) {
         let point: CGPoint = tap.locationInView(self.tableView)
-        let indexPath = self.tableView.indexPathForRowAtPoint(point)!
-        let cell = self.tableView.cellForRowAtIndexPath(indexPath)
-        if self.rowExistsInDataSource(indexPath) {
-            self.performSegueWithIdentifier("editRequest", sender: cell)
+        if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
+            let cell = self.tableView.cellForRowAtIndexPath(indexPath)
+            if self.rowExistsInDataSource(indexPath) {
+                self.performSegueWithIdentifier("editRequest", sender: cell)
+            }
         }
     }
 
     func doubleTap(tap: UITapGestureRecognizer) {
         let point: CGPoint = tap.locationInView(self.tableView)
-        let indexPath = self.tableView.indexPathForRowAtPoint(point)!
-        if self.rowExistsInDataSource(indexPath) {
-            self.flipPrayedIndicator(indexPath)
+        if let indexPath = self.tableView.indexPathForRowAtPoint(point) {
+            if self.rowExistsInDataSource(indexPath) {
+                self.flipPrayedIndicator(indexPath)
+            }
         }
     }
     
@@ -203,7 +207,6 @@ class PrayerListTableViewController: UITableViewController {
     }
     
     func findPrayerRequestRow(prayerRequest: PrayerRequest, section: Int) -> Int {
-        var i = 0
         var found = 0
         let list = self.masterList.getTodaysList()[section]
         for i in 0..<list.count {

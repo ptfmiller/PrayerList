@@ -53,7 +53,7 @@ class SignUpViewController: UIViewController {
             alert.show()
         } else {
 
-            var user = PFUser()
+            let user = PFUser()
             user.username = self.emailTextField.text
             user.password = self.passwordTextField.text
             user.email = self.emailTextField.text
@@ -61,7 +61,7 @@ class SignUpViewController: UIViewController {
             user.signUpInBackgroundWithBlock {
                 (succeeded: Bool, error: NSError?) -> Void in
                 if let error = error {
-                    let errorString = error.userInfo?["error"] as? String
+                    let errorString = error.userInfo["error"] as? String
                     // Show the errorString somewhere and let the user try again.
                     let alert = UIAlertView()
                     alert.title = "Sign up error!"

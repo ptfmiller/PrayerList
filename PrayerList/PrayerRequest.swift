@@ -85,11 +85,11 @@ class PrayerRequest {
         
         let calendar = NSCalendar.currentCalendar()
         
-        let startComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+        let startComponents = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: NSDate())
         startComponents.weekday = _firstDayOfWeek
         self.dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
         
-        let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
+        let endComponents = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
         endComponents.weekday = _lastDayOfWeek
         self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
     }
@@ -110,11 +110,11 @@ class PrayerRequest {
             // We have exited the date frame of the current randomization
             let calendar = NSCalendar.currentCalendar()
 
-            let startComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate())
+            let startComponents = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: NSDate())
             startComponents.weekday = _firstDayOfWeek
             self.dateFrameStart = flattenDate(calendar.dateFromComponents(startComponents)!)
             
-            let endComponents = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
+            let endComponents = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: NSDate(timeIntervalSinceNow: _secondsInThreeWeeks))
             endComponents.weekday = _lastDayOfWeek
             self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
             
@@ -171,7 +171,7 @@ class PrayerRequest {
         saveObject["validDays"] = self.convertDictionaryToBoolArray(self.validDays)
         
         // Store the current user for retrieving later
-        var user = PFUser.currentUser()
+        let user = PFUser.currentUser()
         saveObject["user"] = user
         saveObject.saveInBackground()
     }
@@ -213,7 +213,7 @@ class PrayerRequest {
         var possibleDates = createCandidateDates()
         
         // perform weighting based on calendarList's fullness
-        for (date, distribution) in possibleDates {
+        for (date, _) in possibleDates {
             if (calendarList[date] != nil) {
                 possibleDates.updateValue(possibleDates[date]! * pow(0.5, Double(calendarList[date]!.count)), forKey: date)
             }
@@ -275,8 +275,8 @@ class PrayerRequest {
     }
     
     func fillFourweeklyPrayerRequest(possibleDates: Dictionary<NSDate, Double>, dateFrameStart: NSDate, dateFrameEnd: NSDate) {
-        var frameStart = dateFrameStart
-        var frameEnd = dateFrameEnd
+        let frameStart = dateFrameStart
+        let frameEnd = dateFrameEnd
         self.mayAddRandomDate(possibleDates, frameStart: frameStart, frameEnd: frameEnd)
     }
     
@@ -284,7 +284,7 @@ class PrayerRequest {
         var candiDates = Dictionary<NSDate, Double>()
         let masterList = MasterList.sharedInstance
         for day in 0..<_daysInFourWeeks {
-            var newDate = flattenDate(NSDate(timeInterval: _secondsInDay * Double(day), sinceDate: dateFrameStart))
+            let newDate = flattenDate(NSDate(timeInterval: _secondsInDay * Double(day), sinceDate: dateFrameStart))
             if (masterList.validDate(newDate) && self.validDate(newDate)) {
                 candiDates[newDate] = 1
             } else {
@@ -320,8 +320,8 @@ class PrayerRequest {
                 updatedFrameStart = frameStart
             }
             // create the new set of dates that we may populate
-            var updatedPossibleDates = self.datesInFrame(possibleDates, frameStart: updatedFrameStart, frameEnd: frameEnd)
-            var newSelectedDate = self.selectDate(updatedPossibleDates)
+            let updatedPossibleDates = self.datesInFrame(possibleDates, frameStart: updatedFrameStart, frameEnd: frameEnd)
+            let newSelectedDate = self.selectDate(updatedPossibleDates)
             // Add the new randomly selected date
             self.dates.append(newSelectedDate)
         }
@@ -342,7 +342,7 @@ class PrayerRequest {
     func selectDate(dateGroup: Dictionary<NSDate, Double>) -> NSDate {
         var total = 0.0
         var selection: NSDate?
-        for (date, distribution) in dateGroup {
+        for (_, distribution) in dateGroup {
             total += distribution
         }
         var rand = Double.random(min: 0.0, max: total)
@@ -359,7 +359,7 @@ class PrayerRequest {
     
     func flattenDate(date: NSDate) -> NSDate {
         let calendar = NSCalendar.currentCalendar()
-        let components = calendar.components(NSCalendarUnit.CalendarUnitWeekday | NSCalendarUnit.CalendarUnitWeekOfYear | NSCalendarUnit.CalendarUnitYear, fromDate: date)
+        let components = calendar.components([NSCalendarUnit.Weekday, NSCalendarUnit.WeekOfYear, NSCalendarUnit.Year], fromDate: date)
         return calendar.dateFromComponents(components)!
     }
     
@@ -408,7 +408,6 @@ class PrayerRequest {
     func removePrayed(date: NSDate) {
         let flattenedDate = flattenDate(date)
         for i in 0..<self.prayerRecord.count {
-            let result = flattenedDate.compare(self.prayerRecord[i])
             if flattenedDate.compare(self.prayerRecord[i]) == .OrderedSame {
                 self.prayerRecord.removeAtIndex(i)
             }
@@ -418,7 +417,7 @@ class PrayerRequest {
     
     func doneToday() -> Bool {
         var isDone = false
-        var today = flattenDate(NSDate())
+        let today = flattenDate(NSDate())
         for date in self.prayerRecord {
             if date.compare(today) == .OrderedSame {
                 isDone = true

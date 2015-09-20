@@ -54,7 +54,7 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     }
     
     override func viewWillAppear(animated: Bool) {
-        var switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
+        let switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
 
         let masterList = MasterList.sharedInstance
         let masterListSelections = masterList.getDaySelections()
@@ -100,11 +100,11 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         return PrayerRequest.Frequency.numberOfFrequencyOptions()
     }
     
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String! {
+    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
         return PrayerRequest.Frequency.listOfOptions()[row]
     }
     
-    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView!) -> UIView {
+    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
         var pickerLabel = view as? UILabel
         if pickerLabel == nil {
             pickerLabel = UILabel()
@@ -138,7 +138,7 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         prayerRequest?.requestName = requestNameTextField.text
         prayerRequest?.details = detailsTextView.text
         let frequencySelection = frequencyPicker.selectedRowInComponent(0)
-        var switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
+        let switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
         var newSelections = Dictionary<MasterList.Day, Bool>()
         for (day, uiSwitch) in switchesDictionary {
             newSelections[day] = uiSwitch.on
