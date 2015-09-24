@@ -9,11 +9,13 @@
 import UIKit
 import Parse
 
-class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate {
+class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, UIPickerViewDataSource, UIAlertViewDelegate, UITextViewDelegate {
     
     var prayerRequest: PrayerRequest?
     var isNewRequest: Bool = false
     let prayedForTableViewDelegate = PrayedForTableViewDelegate()
+    let detailsPlaceHolderText = "Optional"
+
     
     @IBOutlet var requestNameTextField: UITextField!
     @IBOutlet var detailsTextView: UITextView!
@@ -47,10 +49,23 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
             if (prayerRequest?.details != nil) {
                 detailsTextView.text = prayerRequest?.details
             } else {
-                detailsTextView.text = ""
+                self.detailsTextView.text = self.detailsPlaceHolderText
+                self.detailsTextView.textColor = UIColor.lightGrayColor()
             }
             self.frequencyPicker.selectRow(prayerRequest!.frequency.rawValue - 1, inComponent: 0, animated: true)
+        } else {
+            self.detailsTextView.text = self.detailsPlaceHolderText
+            self.detailsTextView.textColor = UIColor.lightGrayColor()
         }
+        
+        // Set capitalization and placeholder text for the name and details
+        self.requestNameTextField.autocapitalizationType = .Words
+        self.detailsTextView.autocapitalizationType = .Sentences
+        self.requestNameTextField.placeholder = "Name this prayer topic"
+        self.detailsTextView.delegate = self
+        
+        // Set navigation for the name and details text view keyboards
+        
     }
     
     override func viewWillAppear(animated: Bool) {
@@ -88,6 +103,7 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         
         self.prayedForTableViewHeightConstraint.constant = height;
         self.view.setNeedsUpdateConstraints()
+        
         
     }
     
@@ -134,28 +150,34 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
     }
     
     @IBAction func saveWasPressed(sender: AnyObject) {
-        // this is really ugly, need to find a way to fix this implementation
-        prayerRequest?.requestName = requestNameTextField.text
-        prayerRequest?.details = detailsTextView.text
-        let frequencySelection = frequencyPicker.selectedRowInComponent(0)
-        let switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
-        var newSelections = Dictionary<MasterList.Day, Bool>()
-        for (day, uiSwitch) in switchesDictionary {
-            newSelections[day] = uiSwitch.on
-        }
-        // If an update is needed, this function will perform the update and refresh all prayer requests so they fall on the correct days
-        prayerRequest?.mayUpdateDaySelections(newSelections)
-        prayerRequest?.mayUpdateFrequency(frequencySelection)
+        if self.requestNameTextField.text!.isEmpty {
+            let alertView = UIAlertView(title: "Error", message: "Please enter a name for this prayer topic", delegate: self, cancelButtonTitle: "OK")
+            alertView.show()
+        } else {
+            self.prayerRequest?.setName(requestNameTextField.text)
+            if self.detailsTextView.text != self.detailsPlaceHolderText {
+                self.prayerRequest?.setDetails(detailsTextView.text)
+            }
+            let frequencySelection = frequencyPicker.selectedRowInComponent(0)
+            let switchesDictionary = [MasterList.Day.Sunday: switchSunday, MasterList.Day.Monday: switchMonday, MasterList.Day.Tuesday: switchTuesday, MasterList.Day.Wednesday: switchWednesday, MasterList.Day.Thursday: switchThursday, MasterList.Day.Friday: switchFriday, MasterList.Day.Saturday: switchSaturday]
+            var newSelections = Dictionary<MasterList.Day, Bool>()
+            for (day, uiSwitch) in switchesDictionary {
+                newSelections[day] = uiSwitch.on
+            }
+            // If an update is needed, this function will perform the update and refresh all prayer requests so they fall on the correct days
+            prayerRequest?.mayUpdateDaySelections(newSelections)
+            prayerRequest?.mayUpdateFrequency(frequencySelection)
         
         
-        prayerRequest?.save()
-        let masterList = MasterList.sharedInstance
-        if self.isNewRequest {
-            masterList.addPrayerRequest(self.prayerRequest!)
+            prayerRequest?.save()
+            let masterList = MasterList.sharedInstance
+            if self.isNewRequest {
+                masterList.addPrayerRequest(self.prayerRequest!)
+            }
+            // This is here so the list will update based on the new information
+            masterList.fillCalendar()
+            self.dismissSelf()
         }
-        // This is here so the list will update based on the new information
-        masterList.fillCalendar()
-        self.dismissSelf()
     }
 
     /*@IBAction func cancelWasPressed(sender: AnyObject) {
@@ -178,14 +200,21 @@ class RequestEditorViewController: UITableViewController, UIPickerViewDelegate, 
         }
     }
     
-    /*
-    // MARK: - Navigation
-    
-    // In a storyboard-based application, you will often want to do a little preparation before navigation
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-    // Get the new view controller using segue.destinationViewController.
-    // Pass the selected object to the new view controller.
+    func textViewShouldBeginEditing(textView: UITextView) -> Bool {
+        self.detailsTextView.textColor = UIColor.blackColor()
+        if(self.detailsTextView.text == detailsPlaceHolderText) {
+            self.detailsTextView.text = ""
+        }
+        return true
     }
-    */
+    
+    func textViewDidEndEditing(textView: UITextView) {
+        if(textView.text == "") {
+            self.detailsTextView.text = detailsPlaceHolderText
+            self.detailsTextView.textColor = UIColor.lightGrayColor()
+        }
+    }
+    
+    
     
 }

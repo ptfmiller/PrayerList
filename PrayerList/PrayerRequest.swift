@@ -76,8 +76,9 @@ class PrayerRequest {
     var prayerRecord: [NSDate] = []
     var validDays = Dictionary<MasterList.Day, Bool>()
     var saveObject = PFObject(className: "PrayerRequest")
-
     
+    var completeRefresh = false
+
     // Only used by the requestEditor when you add a request, called through the main tableviewcontroller
     init() {
         self.requestName = nil
@@ -118,6 +119,8 @@ class PrayerRequest {
             endComponents.weekday = _lastDayOfWeek
             self.dateFrameEnd = flattenDate(calendar.dateFromComponents(endComponents)!)
             
+            self.dates = []
+            self.completeRefresh = true
             self.refreshDates()
         }
     }
@@ -178,6 +181,14 @@ class PrayerRequest {
     
     func delete() {
         saveObject.deleteInBackground()
+    }
+    
+    func setName(name: String?) {
+        self.requestName = name
+    }
+    
+    func setDetails(details: String?) {
+        self.details = details
     }
     
     func convertBoolArrayToDictionary(boolArray: [Bool]) -> Dictionary<MasterList.Day, Bool> {
@@ -301,11 +312,12 @@ class PrayerRequest {
     
     func mayAddRandomDate(possibleDates: Dictionary<NSDate, Double>, frameStart: NSDate, frameEnd: NSDate) {
         // Find whether there is a date in the frame that has already passed or is today. In this case, leave it alone
+        self.completeRefresh = self.completeRefresh || self.dates.count == 0
         var i = 0
         var needToReplace = false
         while i < self.dates.count {
             // if the if condition is never met, then the date is in the past and should not be reset
-            if (self.dates[i].compare(flattenDate(NSDate())) == .OrderedDescending && self.dates[i].compare(frameEnd) == .OrderedAscending) {
+            if (self.dates[i].compare(flattenDate(NSDate())) == .OrderedDescending && self.dates[i].compare(frameEnd) == .OrderedAscending && self.dates[i].compare(frameStart) == .OrderedDescending) {
                 // The date is still to come, and we need to replace it
                 self.dates.removeAtIndex(i)
                 needToReplace = true
@@ -313,7 +325,8 @@ class PrayerRequest {
             }
             i += 1
         }
-        if needToReplace {
+        // Allows us to force date filling when the dateframe is updated
+        if needToReplace || self.completeRefresh {
             // Use the updated frame start, which is the later of today or the frame start passed into the function
             var updatedFrameStart = self.flattenDate(NSDate())
             if frameStart.compare(updatedFrameStart) == .OrderedDescending {
